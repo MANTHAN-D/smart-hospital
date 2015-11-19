@@ -1,0 +1,17 @@
+<h3>Device Management!</h3>
+
+	Device : <select ng-options="d.device_id for d in devices" 
+	ng-model="device" ng-change="getDeviceRecord(device)"></select>
+	<br><br>
+		
+	<button ng-click="readDeviceData(device)">Read</button>		
+	<br><br>
+	<div ng-switch="readDeviceDataFlag">
+	<span ng-switch-when="true">
+		{{deviceData.parameter_name}} : {{deviceData.last_value}} recorded at {{deviceData.updated_at}}
+	</span>
+	</div>
+
+	{{deviceData.parameter_name}} : {{deviceData.last_value}} recorded at {{deviceData.updated_at}}
+<br><br>
+<button ng-click="goHome()">Home</button>

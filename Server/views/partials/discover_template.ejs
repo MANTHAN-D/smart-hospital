@@ -1,0 +1,14 @@
+<h3>Device Management!</h3>	
+	
+	<br><br>
+	<button ng-click="discoverDevices()">Discover</button>	
+	<br>		
+
+	
+	<ol ng-repeat="d in liveDevices">
+		<li>{{d.device_id}}</li>
+	</ol>
+
+<br><br>
+
+<button ng-click="goHome()">Home</button>

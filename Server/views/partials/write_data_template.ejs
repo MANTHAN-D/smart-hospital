@@ -1,0 +1,13 @@
+<h3>Device Management!</h3>
+
+	Device : <select ng-options="d.device_id for d in devices" 
+	ng-model="device" ng-change="getDeviceRecord(device)"></select>
+	<br><br>
+	
+	{{parameter.name}} : <input type='text'value='{{parameter.last_value}}' ng-model='parameter.last_value'></input>
+	<br><br>	
+	<button ng-click="writeDeviceData(device)">Write</button>		
+	<br><br>
+
+<br><br>
+<button ng-click="goHome()">Home</button>

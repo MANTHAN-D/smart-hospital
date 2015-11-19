@@ -1,0 +1,14 @@
+<h3>Information Management!</h3>
+
+	Device : <select ng-options="d.device_id for d in devices" 
+	ng-model="device" ng-change="getDeviceRecord(device)"></select>
+	<br><br>
+		
+	<button ng-click="observeStatus(device,'observe')">Observe</button>		
+	<button ng-click="observeStatus(device,'deobserve')">Cancel Observe</button>		
+	<br>		
+	</div>
+</div>
+<br><br>
+
+<button ng-click="goHome()">Home</button>

@@ -1,0 +1,22 @@
+<h3>Device Management!</h3>
+
+	Device : <select ng-options="d.device_id for d in devices" 
+	ng-model="device" ng-change="getDeviceRecord(device)"></select>
+	<br><br>
+
+	Parameter : <input type='text'value='{{parameter.name}}' ng-model='parameter.name' readonly></input>
+	<br><br>
+	Frequency : <input type='text'value='{{parameter.frequency}}' ng-model='parameter.frequency' readonly></input>
+	<br><br>
+	Safe Value : <input type='text'value='{{parameter.safe_value}}' ng-model='parameter.safe_value' readonly></input>
+	<br><br>
+	Disable : <input type='text'value='{{parameter.disableFlag}}' ng-model='parameter.disableFlag' readonly></input>
+	
+	<br><br>
+	<button ng-click="executeOnDevice(device)">Execute</button>	
+	<br>		
+
+
+<br><br>
+
+<button ng-click="goHome()">Home</button>

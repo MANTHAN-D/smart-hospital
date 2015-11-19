@@ -1,0 +1,175 @@
+<h3>Client Database Architecture!</h3>
+<div ng-switch="readFBS">
+  	<div ng-switch-when="true">    
+	    <table border="1">
+	    <caption><b>Factory_Bootstrap<b></caption>
+	      <tr>
+	        <th></th>  
+	        <th>Object Id</th>
+	        <th>Server URI</th> 
+	        <th>Device Id</th>
+	        <th>Manufacturer</th>
+	        <th>Model</th>
+	        <th>Firmware</th>
+	        <th>Serial</th>
+	      </tr>       
+	      <tr ng-repeat="cfbsdata in cfbs_Resdata">
+	        <td><input type="checkbox" value='{{cfbsdata.object_id}}' ng-model="cfbsdata.Selected"></td>
+	        <td><span>{{cfbsdata.object_id}}</span></td>        
+	        <td><input type='text' value='{{cfbsdata.server_uri}}' ng-model='cfbsdata.server_uri'></input></td>
+	        <td><input type='text'value='{{cfbsdata.device_id}}' ng-model='cfbsdata.device_id'></input></td>
+	        <td><input type='text'value='{{cfbsdata.manufacturer}}' ng-model='cfbsdata.manufacturer'></input></td>
+	        <td><input type='text'value='{{cfbsdata.model}}' ng-model='cfbsdata.model'></input></td>
+	        <td><input type='text'value='{{cfbsdata.firmware}}' ng-model='cfbsdata.firmware'></input></td>
+	        <td><input type='text'value='{{cfbsdata.serial}}' ng-model='cfbsdata.serial'></input></td>
+	      </tr>
+	    </table> 
+	    <br><br>
+	    <button ng-click="clear('factorybs')">Clear</button>
+	    <button ng-click="update('factorybs')">Update</button>
+	    <button ng-click="delete('factorybs')">Delete</button>
+	    <br><br>
+	</div>
+	<div ng-switch-default>
+		<table border="1">
+	    <caption><b>Factory_Bootstrap</b></caption>
+	      <tr>
+	        <th>Server URI</th> 
+	        <th>Device Id</th>
+	        <th>Manufacturer</th>
+	        <th>Model</th>
+	        <th>Firmware</th>
+	        <th>Serial</th>
+	      </tr>
+	      <tr>
+	        <td><input ng-model='cfbs.server_uri'></input></td>
+	        <td><input ng-model='cfbs.device_id'></input></td>
+	        <td><input ng-model='cfbs.manufacturer'></input></td>
+	        <td><input ng-model='cfbs.model'></input></td>
+	        <td><input ng-model='cfbs.firmware'></input></td>
+	        <td><input ng-model='cfbs.serial'></input></td>
+	      </tr>
+	    </table>
+	    <br><br>
+	    <button ng-click="create('factorybs')">Create</button>
+	    <button ng-click="read('factorybs')">View/Modify</button> 
+	    <br><br>
+	</div>
+</div>
+<div ng-switch="readCBS">
+  	<div ng-switch-when="true">	
+	    <table border="1">
+	    <caption><b>Configured_Bootstrap</b></caption>
+	      <tr>
+	        <th></th>  
+	        <th>Object Id</th>
+	        <th>Server URI</th>
+	        <th>Priority</th>
+	        <th>Device Id</th>
+	        <th>Manufacturer</th>
+	        <th>Model</th>
+	        <th>Firmware</th>
+	        <th>Serial</th>
+	      </tr>       
+	      <tr ng-repeat="ccbsdata in ccbs_Resdata">
+	        <td><input type="checkbox" value='{{ccbsdata.object_id}}' ng-model="ccbsdata.Selected"></td>
+	        <td><span>{{ccbsdata.object_id}}</span></td>        
+	        <td><input type='text' value='{{ccbsdata.server_uri}}' ng-model='ccbsdata.server_uri'></input></td>
+	        <td><input type='text'value='{{ccbsdata.priority}}' ng-model='ccbsdata.priority'></input></td>
+	        <td><input type='text'value='{{ccbsdata.device_id}}' ng-model='ccbsdata.device_id'></input></td>
+	        <td><input type='text'value='{{ccbsdata.manufacturer}}' ng-model='ccbsdata.manufacturer'></input></td>
+	        <td><input type='text'value='{{ccbsdata.model}}' ng-model='ccbsdata.model'></input></td>
+	        <td><input type='text'value='{{ccbsdata.firmware}}' ng-model='ccbsdata.firmware'></input></td>
+	        <td><input type='text'value='{{ccbsdata.serial}}' ng-model='ccbsdata.serial'></input></td>
+	      </tr>
+	    </table> 
+	    <br><br>
+	    <button ng-click="clear('configbs')">Clear</button>
+	    <button ng-click="update('configbs')">Update</button>
+	    <button ng-click="delete('configbs')">Delete</button>
+	    <br><br>
+	</div>
+	<div ng-switch-default>
+		<table border="1">
+	    <caption><b>Configured_Bootstrap</b></caption>
+	      <tr>    
+	        <th>Server URI</th>
+	        <th>Priority</th>
+	        <th>Device Id</th>
+	        <th>Manufacturer</th>
+	        <th>Model</th>
+	        <th>Firmware</th>
+	        <th>Serial</th>
+	      </tr>
+	      <tr>
+	        <td><input ng-model='ccbs.server_uri'></input></td>
+	        <td><input ng-model='ccbs.priority'></input></td>
+	        <td><input ng-model='ccbs.device_id'></input></td>
+	        <td><input ng-model='ccbs.manufacturer'></input></td>
+	        <td><input ng-model='ccbs.model'></input></td>
+	        <td><input ng-model='ccbs.firmware'></input></td>
+	        <td><input ng-model='ccbs.serial'></input></td>
+	      </tr>
+	    </table>
+	    <br><br>
+	    <button ng-click="create('configbs')">Create</button>
+	    <button ng-click="read('configbs')">View/Modify</button> 
+	    <br><br>
+	</div>
+</div>
+<div ng-switch="readCRC">
+  	<div ng-switch-when="true">			
+	    <table border="1">
+	    <caption><b>Reporting_Config</b></caption>
+	      <tr>
+	        <th></th>  
+	        <th>Object Id</th>
+	        <th>Server URI</th> 
+	        <th>Frequency</th>
+	        <th>Parameter Name</th>
+	        <th>Last Value</th>
+	        <th>Disable</th>
+	      </tr>       
+	      <tr ng-repeat="crcdata in crc_Resdata">
+	        <td><input type="checkbox" value='{{crcdata.object_id}}' ng-model="crcdata.Selected"></td>
+	        <td><span>{{crcdata.object_id}}</span></td>        
+	        <td><input type='text' value='{{crcdata.server_uri}}' ng-model='crcdata.server_uri'></input></td>
+	        <td><input type='text'value='{{crcdata.frequency}}' ng-model='crcdata.frequency'></input></td>
+	        <td><input type='text'value='{{crcdata.parameter_name}}' ng-model='crcdata.parameter_name'></input></td>
+	        <td><input type='text'value='{{crcdata.last_value}}' ng-model='crcdata.last_value'></input></td>
+	        <td><input type='text'value='{{crcdata.disable}}' ng-model='crcdata.disable'></input></td>
+	      </tr>
+	    </table> 
+	    <br><br>
+	    <button ng-click="clear('reportingconfig')">Clear</button>
+	    <button ng-click="update('reportingconfig')">Update</button>
+	    <button ng-click="delete('reportingconfig')">Delete</button>
+	    <br><br>
+	</div>
+  	<div ng-switch-default>
+	    <table border="1">
+	    <caption><b>Reporting_Config</b></caption>
+	      <tr>
+	        <th>Server URI</th> 
+	        <th>Frequency</th>
+	        <th>Parameter Name</th>
+	        <th>Last Value</th>
+	        <th>Disable</th>
+	      </tr>
+	      <tr>
+	        <td><input ng-model='crc.server_uri'></input></td>
+	        <td><input ng-model='crc.frequency'></input></td>
+	        <td><input ng-model='crc.parameter_name'></input></td>
+	        <td><input ng-model='crc.last_value'></input></td>
+	        <td><input ng-model='crc.disable'></input></td>
+	      </tr>
+	    </table>
+	    <br><br>
+	    <button ng-click="create('reportingconfig')">Create</button>
+	    <button ng-click="read('reportingconfig')">View/Modify</button>
+	    <br><br> 
+    </div>  
+</div>  
+
+<br><br>
+<button ng-click="goHome()">Home</button>

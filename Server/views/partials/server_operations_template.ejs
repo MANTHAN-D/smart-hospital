@@ -1,0 +1,43 @@
+<h3>Device Management!</h3>
+<div ng-switch="modifyDC">
+	Device : <select ng-options="d.device_id for d in devices" 
+	ng-model="device" ng-change="getDeviceRecord(device)"></select>
+	<br><br>
+	<div ng-switch-when="true">		
+		Parameter : <select  ng-model="parameter.name">
+					<option ng-repeat='p in parameters' value='{{p}}'>{{p}}</option>
+					</select>
+		<br><br>
+		Frequency : <input type='text'value='{{parameter.frequency}}' ng-model='parameter.frequency'></input>
+		<br><br>
+		Safe Value : <input type='text'value='{{parameter.safe_value}}' ng-model='parameter.safe_value'></input>
+		<br><br>
+		Disable : <select ng-model="parameter.disableFlag">
+					<option value='yes'>Yes</option>
+					<option value='no'>No</option>
+				</select>
+		<br><br>
+		<button ng-click="modifyAttribute(device)">Modify Attribute</button>
+		<br>
+	</div>
+	<div ng-switch-default>
+		Parameter : <select  ng-model="parameter.name">
+					<option ng-repeat='p in parameters' value='{{p}}'>{{p}}</option>
+					</select>
+		<br><br>
+		Frequency : <input type='text'value='{{parameter.frequency}}' ng-model='parameter.frequency'></input>
+		<br><br>
+		Safe Value : <input type='text'value='{{parameter.safe_value}}' ng-model='parameter.safe_value'></input>
+		<br><br>
+		Disable : <select ng-model="parameter.disableFlag">
+					<option value='yes'>Yes</option>
+					<option value='no'>No</option>
+				</select>
+		<br><br>
+		<button ng-click="writeAttribute(device)">Write Attribute</button>		
+		<br>		
+	</div>
+</div>
+<br><br>
+
+<button ng-click="goHome()">Home</button>

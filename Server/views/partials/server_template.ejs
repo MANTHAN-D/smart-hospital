@@ -1,0 +1,251 @@
+<h3>Server Database Architecture!</h3>
+<div ng-switch="readDR">
+  	<div ng-switch-when="true">    
+	    <table border="1">
+	    <caption><b>Device_Registeration<b></caption>
+	      <tr>
+	        <th></th>  
+	        <th>Object Id</th>
+	        <th>Device Id</th> 
+	        <th>Device URI</th> 
+	        <th>Manufacturer</th>
+	        <th>Model</th>
+	        <th>Firmware</th>
+	        <th>Serial</th>
+	      </tr>       
+	      <tr ng-repeat="drdata in dr_Resdata">
+	        <td><input type="checkbox" value='{{drdata.object_id}}' ng-model="drdata.Selected"></td>
+	        <td><span>{{drdata.object_id}}</span></td>
+	        <td><input type='text'value='{{drdata.device_id}}' ng-model='drdata.device_id'></input></td>
+	        <td><input type='text'value='{{drdata.device_uri}}' ng-model='drdata.device_uri'></input></td>
+	        <td><input type='text'value='{{drdata.manufacturer}}' ng-model='drdata.manufacturer'></input></td>
+	        <td><input type='text'value='{{drdata.model}}' ng-model='drdata.model'></input></td>
+	        <td><input type='text'value='{{drdata.firmware}}' ng-model='drdata.firmware'></input></td>
+	        <td><input type='text'value='{{drdata.serial}}' ng-model='drdata.serial'></input></td>
+	      </tr>
+	    </table> 
+	    <br><br>
+	    <button ng-click="clear('devregister')">Clear</button>
+	    <button ng-click="update('devregister')">Update</button>
+	    <button ng-click="delete('devregister')">Delete</button>
+	    <br><br>
+	</div>
+	<div ng-switch-default>
+		<table border="1">
+	    <caption><b>Device_Registeration</b></caption>
+	      <tr>    
+	        <th>Device Id</th>
+	        <th>Device URI</th>  
+	        <th>Manufacturer</th>
+	        <th>Model</th>
+	        <th>Firmware</th>
+	        <th>Serial</th>
+	      </tr>
+	      <tr>
+	        <td><input ng-model='dr.device_id'></input></td>
+	        <td><input ng-model='dr.device_uri'></input></td>
+	        <td><input ng-model='dr.manufacturer'></input></td>
+	        <td><input ng-model='dr.model'></input></td>
+	        <td><input ng-model='dr.firmware'></input></td>
+	        <td><input ng-model='dr.serial'></input></td>
+	      </tr>
+	    </table>
+	    <br><br>
+	    <button ng-click="create('devregister')">Create</button>
+	    <button ng-click="read('devregister')">View/Modify</button> 
+	    <br><br>
+	</div>
+</div>
+<div ng-switch="readDC">
+  	<div ng-switch-when="true">	
+	    <table border="1">
+	    <caption><b>Device_Configuration</b></caption>
+	      <tr>
+	        <th></th>  
+	        <th>Object Id</th>
+	        <th>Device Id</th>
+	        <th>Parameter Name</th>
+	        <th>Frequency</th>
+	        <th>Disable</th>
+	        <th>Safe Value</th>
+	      </tr>       
+	      <tr ng-repeat="dcdata in dc_Resdata">
+	        <td><input type="checkbox" value='{{dcdata.object_id}}' ng-model="dcdata.Selected"></td>
+	        <td><span>{{dcdata.object_id}}</span></td>        
+	        <td><input type='text' value='{{dcdata.device_id}}' ng-model='dcdata.device_id'></input></td>
+	        <td><input type='text'value='{{dcdata.parameter_name}}' ng-model='dcdata.parameter_name'></input></td>
+	        <td><input type='text'value='{{dcdata.frequency}}' ng-model='dcdata.frequency'></input></td>
+	        <td><input type='text'value='{{dcdata.disable}}' ng-model='dcdata.disable'></input></td>
+	        <td><input type='text'value='{{dcdata.safe_value}}' ng-model='dcdata.safe_value'></input></td>
+	      </tr>
+	    </table> 
+	    <br><br>
+	    <button ng-click="clear('devconfig')">Clear</button>
+	    <button ng-click="update('devconfig')">Update</button>
+	    <button ng-click="delete('devconfig')">Delete</button>
+	    <br><br>
+	</div>
+	<div ng-switch-default>
+		<table border="1">
+	    <caption><b>Device_Configuration</b></caption>
+	      <tr>    
+	        <th>Device Id</th>
+	        <th>Parameter Name</th>
+	        <th>Frequency</th>
+	        <th>Disable</th>
+	        <th>Safe Value</th>
+	      </tr>
+	      <tr>
+	        <td><input ng-model='dc.device_id'></input></td>
+	        <td><input ng-model='dc.parameter_name'></input></td>
+	        <td><input ng-model='dc.frequency'></input></td>
+	        <td><input ng-model='dc.disable'></input></td>
+	        <td><input ng-model='dc.safe_value'></input></td>
+	      </tr>
+	    </table>
+	    <br><br>
+	    <button ng-click="create('devconfig')">Create</button>
+	    <button ng-click="read('devconfig')">View/Modify</button> 
+	    <br><br>
+	</div>
+</div>
+<div ng-switch="readDA">
+  	<div ng-switch-when="true">			
+	    <table border="1">
+	    <caption><b>Device Allocation</b></caption>
+	      <tr>
+	        <th></th>  
+	        <th>Object Id</th>
+	        <th>Device Id</th>
+	        <th>Room number</th> 
+	        <th>Patient Id</th>
+	        <th>Priority</th>
+	      </tr>       
+	      <tr ng-repeat="dadata in da_Resdata">
+	        <td><input type="checkbox" value='{{dadata.object_id}}' ng-model="dadata.Selected"></td>
+	        <td><span>{{dadata.object_id}}</span></td>        
+	        <td><input type='text' value='{{dadata.device_id}}' ng-model='dadata.device_id'></input></td>
+	        <td><input type='text'value='{{dadata.room_no}}' ng-model='dadata.room_no'></input></td>
+	        <td><input type='text'value='{{dadata.patient_id}}' ng-model='dadata.patient_id'></input></td>
+	        <td><input type='text'value='{{dadata.priority}}' ng-model='dadata.priority'></input></td>
+	      </tr>
+	    </table> 
+	    <br><br>
+	    <button ng-click="clear('devallocation')">Clear</button>
+	    <button ng-click="update('devallocation')">Update</button>
+	    <button ng-click="delete('devallocation')">Delete</button>
+	    <br><br>
+	</div>
+  	<div ng-switch-default>
+	    <table border="1">
+	    <caption><b>Device Allocation</b></caption>
+	      <tr>    
+	        <th>Device Id</th>
+	        <th>Room number</th> 
+	        <th>Patient Id</th>
+	        <th>Priority</th>
+	      </tr>
+	      <tr>
+	        <td><input ng-model='da.device_id'></input></td>
+	        <td><input ng-model='da.room_no'></input></td>
+	        <td><input ng-model='da.patient_id'></input></td>
+	        <td><input ng-model='da.priority'></input></td>	        
+	      </tr>
+	    </table>
+	    <br><br>
+	    <button ng-click="create('devallocation')">Create</button>
+	    <button ng-click="read('devallocation')">View/Modify</button>
+	    <br><br> 
+    </div>  
+</div>
+<div ng-switch="readPatient">
+  	<div ng-switch-when="true">			
+	    <table border="1">
+	    <caption><b>Patient</b></caption>
+	      <tr>
+	        <th></th>  
+	        <th>Patient Id</th>
+	        <th>Patient Name</th> 
+	        <th>Symptoms</th>
+	      </tr>       
+	      <tr ng-repeat="padata in patient_Resdata">
+	        <td><input type="checkbox" value='{{padata.patient_id}}' ng-model="padata.Selected"></td>
+	        <td><span>{{padata.patient_id}}</span></td>        
+	        <td><input type='text' value='{{padata.patient_name}}' ng-model='padata.patient_name'></input></td>
+	        <td><input type='text'value='{{padata.symptoms}}' ng-model='padata.symptoms'></input></td>	        
+	      </tr>
+	    </table> 
+	    <br><br>
+	    <button ng-click="clear('patient')">Clear</button>
+	    <button ng-click="update('patient')">Update</button>
+	    <button ng-click="delete('patient')">Delete</button>
+	    <br><br>
+	</div>
+  	<div ng-switch-default>
+	    <table border="1">
+	    <caption><b>Patient</b></caption>
+	      <tr>    
+	        <th>Patient Name</th> 
+	        <th>Symptoms</th>
+	      </tr>
+	      <tr>
+	        <td><input ng-model='patient.patient_name'></input></td>
+	        <td><input ng-model='patient.symptoms'></input></td>        
+	      </tr>
+	    </table>
+	    <br><br>
+	    <button ng-click="create('patient')">Create</button>
+	    <button ng-click="read('patient')">View/Modify</button>
+	    <br><br> 
+    </div>  
+</div>
+<div ng-switch="readPatientRecord">
+  	<div ng-switch-when="true">	
+	    <table border="1">
+	    <caption><b>Patient_Records</b></caption>
+	      <tr>
+	        <th></th>  
+	        <th>Object Id</th>
+	        <th>Device Id</th>
+	        <th>Parameter Name</th>
+	        <th>Value</th>
+	        <th>Recieved On</th>
+	      </tr>       
+	      <tr ng-repeat="parecorddata in parecord_Resdata">
+	        <td><input type="checkbox" value='{{parecorddata.object_id}}' ng-model="parecorddata.Selected"></td>
+	        <td><span>{{parecorddata.object_id}}</span></td>        
+	        <td><input type='text' value='{{parecorddata.device_id}}' ng-model='parecorddata.device_id'></input></td>
+	        <td><input type='text'value='{{parecorddata.parameter_name}}' ng-model='parecorddata.parameter_name'></input></td>
+	        <td><input type='text'value='{{parecorddata.value}}' ng-model='parecorddata.value'></input></td>
+	        <td><input type='text'value='{{parecorddata.created_at}}' ng-model='parecorddata.created_at'></input></td>
+	      </tr>
+	    </table> 
+	    <br><br>
+	    <button ng-click="clear('patient_record')">Clear</button>
+	    <button ng-click="update('patient_record')">Update</button>
+	    <button ng-click="delete('patient_record')">Delete</button>
+	    <br><br>
+	</div>
+	<div ng-switch-default>
+		<table border="1">
+	    <caption><b>Patient_Records</b></caption>
+	      <tr>    
+	        <th>Device Id</th>
+	        <th>Parameter Name</th>
+	        <th>Value</th>	        
+	      </tr>
+	      <tr>
+	        <td><input ng-model='parecord.device_id'></input></td>
+	        <td><input ng-model='parecord.parameter_name'></input></td>
+	        <td><input ng-model='parecord.value'></input></td>	        
+	      </tr>
+	    </table>
+	    <br><br>
+	    <button ng-click="create('patient_record')">Create</button>
+	    <button ng-click="read('patient_record')">View/Modify</button> 
+	    <br><br>
+	</div>
+</div> 
+<br><br>
+
+<button ng-click="goHome()">Home</button>

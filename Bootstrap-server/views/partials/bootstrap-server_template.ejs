@@ -1,0 +1,57 @@
+<h3>Bootstrap Server Architecture!</h3>
+<div ng-switch="readFlag">
+  <div ng-switch-when="true">
+    <table border="1" style="width:100%">
+      <tr>
+        <th></th>  
+        <th>Object Id</th>
+        <th>Device Id</th> 
+        <th>Priority</th>
+        <th>Manufacturer</th>
+        <th>Model</th>
+        <th>Firmware</th>
+        <th>Serial</th>
+      </tr>       
+      <tr ng-repeat="rdata in bss_Resdata">
+        <td><input type="checkbox" value='{{rdata.object_id}}' ng-model="rdata.Selected"></td>
+        <td><span>{{rdata.object_id}}</span></td>        
+        <td><input type='text' value='{{rdata.device_id}}' ng-model='rdata.device_id'></input></td>
+        <td><input type='text'value='{{rdata.priority}}' ng-model='rdata.priority'></input></td>
+        <td><input type='text'value='{{rdata.manufacturer}}' ng-model='rdata.manufacturer'></input></td>
+        <td><input type='text'value='{{rdata.model}}' ng-model='rdata.model'></input></td>
+        <td><input type='text'value='{{rdata.firmware}}' ng-model='rdata.firmware'></input></td>
+        <td><input type='text'value='{{rdata.serial}}' ng-model='rdata.serial'></input></td>
+      </tr>
+    </table> 
+    <br><br>
+    <button ng-click="clear()">Clear</button>
+    <button ng-click="update()">Update</button>
+    <button ng-click="delete()">Delete</button>   
+  </div>
+  <div ng-switch-default>
+    <table border="1" style="width:100%">
+      <tr>    
+        <th>Device Id</th> 
+        <th>Priority</th>
+        <th>Manufacturer</th>
+        <th>Model</th>
+        <th>Firmware</th>
+        <th>Serial</th>
+      </tr>
+      <tr>
+        <td><input ng-model='bss.device_id'></input></td>
+        <td><input ng-model='bss.priority'></input></td>
+        <td><input ng-model='bss.manufacturer'></input></td>
+        <td><input ng-model='bss.model'></input></td>
+        <td><input ng-model='bss.firmware'></input></td>
+        <td><input ng-model='bss.serial'></input></td>
+      </tr>
+    </table>
+    <br><br>
+    <button ng-click="create()">Create</button>
+    <button ng-click="read()">View/Modify</button>    
+  </div>
+</div>  
+
+<br><br>
+<button ng-click="goHome()">Home</button>

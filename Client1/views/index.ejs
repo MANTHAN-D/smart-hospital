@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="clientApp">
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-resource.min.js"></script>
+  <script src="javascripts\script.js"></script>
+  <title>Client 1</title>
+</head>
+<body>
+
+<ng-view></ng-view>
+
+<!-- Home Template-->
+<script type="text/ng-template" id="/home">
+<h1>DataBase Architecture!</h1>
+<button ng-click="getClient()">Client Database</button>
+<br><br>
+<h1>Transmission Operations!</h1>
+<button ng-click="dataTransmission()">Transmit data</button>
+</script>
+
+<!-- Client Template-->
+<script type="text/ng-template" id="/client">
+<% include partials/client_template %>
+</script>
+
+<!--Client Operations Template-->
+<script type="text/ng-template" id="/operations">
+<% include partials/client_operations_template %>
+</script>
+
+</body>
+</html>

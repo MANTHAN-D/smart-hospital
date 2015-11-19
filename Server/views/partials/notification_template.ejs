@@ -1,0 +1,28 @@
+<h3>Notifications!</h3>
+<div>
+	<table border="1">
+	    <caption><b>Notifications</b></caption>
+	      <tr> 
+	        <th>Room No</th>
+	        <th>Device Id</th>
+	        <th>Patient Name</th>
+	        <th>Parameter Name</th>
+	        <th>Value</th>
+	        <th>Safe Value</th>
+	      </tr>       
+	      <tr ng-repeat="record in notifications">	        
+	        <td><span>{{record.room_no}}</span></td>        
+	        <td><span>{{record.device_id}}</span></td>
+	        <td><span>{{record.patient_name}}</span></input></td>
+	        <td><span>{{record.parameter_name}}</span></td>
+	        <td><span>{{record.value}}</span></td>
+	        <td><span>{{record.safe_value}}</span></td>
+	      </tr>
+	    </table>
+</div>
+<br><br>
+
+<button ng-click="getNotifications()">View Notifications</button>
+<br><br>
+
+<button ng-click="goHome()">Home</button>
