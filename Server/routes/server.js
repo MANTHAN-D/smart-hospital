@@ -149,7 +149,7 @@ router.get('/:name/:deviceId/:parameter_name/:safe_value',function(req,res,next)
 			if(err){
 				return next(err);
 			}
-			else{
+			else{				
 				res.json(data);
 			}
 		});

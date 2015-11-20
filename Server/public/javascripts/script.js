@@ -602,58 +602,53 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
       var log=[];
       $scope.notifications=[];
       $scope.notiRecord={};
-      var Arrdevice_id=[];
-      var Arrparameter_name = [];
-      var Arrpatient_name = [];
-      var Arrsafe_value = [];
-      var Arrroom_no=[];
-      var Arrvalue=[];
       var i=0;
 
       var resource = 'devallocation';
 
       $http.get('/server/'+resource).
         success(function (allocateddevices){                                          
-                angular.forEach(allocateddevices,function(record){
-                  
-                  Arrdevice_id.push(record.device_id);
-                  Arrroom_no.push(record.room_no);
+                angular.forEach(allocateddevices,function(record){                
 
                   //fetching patient name
                   $http.get('/server/patient/'+record.patient_id).
-                    success(function (patientData){                    
-                      Arrpatient_name.push(patientData[0].patient_name);
+                    success(function (patientData){
 
                       //fetching parameter name and safe value
                       $http.get('/server/chkdevconfig/'+record.device_id).
-                        success(function (deviceData){                        
+                        success(function (deviceDataSet){
+                          
+                          angular.forEach(deviceDataSet,function(deviceData){
+                            if(typeof(deviceData) != 'undefined')
+                            {
+                              $http.get('/server/chkfornotifications/'+record.device_id+'/'+deviceData.parameter_name+'/'+deviceData.safe_value).
+                              success(function (notificationData){
+                                if(notificationData.length > 0){
 
-                          if(typeof(deviceData[0]) != 'undefined')
-                          {
-                            Arrparameter_name.push(deviceData[0].parameter_name);
-                            Arrsafe_value.push(deviceData[0].safe_value);
-                          }
+                                  // $scope.notiRecord.device_id = Arrdevice_id[i];
+                                  // $scope.notiRecord.room_no = Arrroom_no[i];
+                                  // $scope.notiRecord.patient_name = Arrpatient_name[i];                                
+                                  // $scope.notiRecord.parameter_name = Arrparameter_name[i];
+                                  // $scope.notiRecord.safe_value = Arrsafe_value[i];
+                                  // $scope.notiRecord.value = Arrvalue[i];
 
-                          if(typeof(record.device_id) != 'undefined' && typeof(deviceData[0]) != 'undefined')
-                          {                            
-                            $http.get('/server/chkfornotifications/'+record.device_id+'/'+deviceData[0].parameter_name+'/'+deviceData[0].safe_value).
-                            success(function (notificationData){
-                              if(notificationData.length > 0){
+                                  $scope.notiRecord.device_id = record.device_id;
+                                  $scope.notiRecord.room_no = record.room_no;
+                                  $scope.notiRecord.patient_name = patientData[0].patient_name;                                
+                                  $scope.notiRecord.parameter_name = deviceData.parameter_name;
+                                  $scope.notiRecord.safe_value = deviceData.safe_value;
+                                  $scope.notiRecord.value = notificationData[0].value;
 
-                                Arrvalue.push(notificationData[0].value);
-
-                                $scope.notiRecord.device_id = Arrdevice_id[i];
-                                $scope.notiRecord.room_no = Arrroom_no[i];
-                                $scope.notiRecord.patient_name = Arrpatient_name[i];
-                                $scope.notiRecord.parameter_name = Arrparameter_name[i];
-                                $scope.notiRecord.safe_value = Arrsafe_value[i];
-                                $scope.notiRecord.value = Arrvalue[i];                                                     
-                              }                              
-                            });
-                          }
-                          $scope.notifications.push($scope.notiRecord);
-                          $scope.notiRecord = {};                      
-                          i++;
+                                  $scope.notifications.push($scope.notiRecord);
+                                  // i++;
+                                  $scope.notiRecord = {};
+                                }                              
+                              });
+                            }
+                          });
+                          // else{
+                            // i++;
+                          // }                          
                         });
                     });                          
                 },log);
