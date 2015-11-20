@@ -141,9 +141,10 @@ router.get('/:name/:objectId',function(req,res,next){
 });
 
 /* For determining notifications */
-router.get('/:name/:deviceId/:safe_value',function(req,res,next){
+router.get('/:name/:deviceId/:parameter_name/:safe_value',function(req,res,next){
 	if(req.params.name == "chkfornotifications"){		
-		Patient_Records.find({device_id: parseInt(req.params.deviceId),value : {$gt: parseFloat(req.params.safe_value)}},
+		Patient_Records.find({device_id: parseInt(req.params.deviceId),value : {$gt: parseFloat(req.params.safe_value)},
+			parameter_name : req.params.parameter_name},
 			null,{sort : {created_at : -1}},function(err,data){
 			if(err){
 				return next(err);

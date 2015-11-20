@@ -10,7 +10,7 @@ var Reporting_Configuration = require('../models/Reporting_Configuration.js');
 var headers = {
     'Content-Type' : 'application/json',
     'Access-Control-Allow-Headers' : 'Origin, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, X-Response-Time, X-PINGOTHER, X-CSRF-Token, X-Requested-With',
-    'Access-Control-Allow-Origin' : '*',
+    'Access-Control-Allow-Origin' : 'http://localhost:3001',
     'Access-Control-Allow-Methods' : 'POST, GET, PUT, DELETE, OPTIONS'
 };
 
@@ -23,7 +23,7 @@ router.get('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});
 	}
@@ -33,7 +33,7 @@ router.get('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});
 	}
@@ -43,9 +43,22 @@ router.get('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});
+	}
+	else if(req.params.name == "execute"){
+		Reporting_Configuration.find(function(err,data){
+			if(err){
+				return next(err);
+			}
+			else{
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
+			}
+		});
+	}
+	else if(req.params.name == "discover"){
+			res.status(200).set('Access-Control-Allow-Origin', '*').end();
 	}
 	else{
 		//do nothing
@@ -53,7 +66,7 @@ router.get('/:name',function(req,res,next){
 });
 
 /* Get Specific Object from specified resource */
-router.get('/:name?:objectId',function(req,res,next){
+router.get('/:name/:objectId',function(req,res,next){
 	 
 	if(req.params.name == "factorybs"){
 		Factory_Bootstrap.find({object_id: parseInt(req.params.objectId)},function(err,data){
@@ -61,7 +74,7 @@ router.get('/:name?:objectId',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});
 	}
@@ -71,7 +84,7 @@ router.get('/:name?:objectId',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});
 	}
@@ -81,10 +94,20 @@ router.get('/:name?:objectId',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});
 	}
+	else if(req.params.name == "readDataValue"){
+		Reporting_Configuration.find({parameter_name: req.params.objectId},function(err,data){
+			if(err){
+				return next(err);
+			}
+			else{
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
+			}
+		});
+	}	
 	else{
 		//do nothing
 	}	
@@ -108,7 +131,7 @@ router.post('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(post);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(post).end();
 			}
 		});				
 	}
@@ -130,7 +153,7 @@ router.post('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(post);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(post).end();
 			}
 		});		
 	}
@@ -154,7 +177,7 @@ router.post('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(post);				
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(post).end();				
 			}
 		});
 	}
@@ -184,7 +207,7 @@ router.put('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(post);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(post).end();
 			}
 		});				
 	}
@@ -208,7 +231,7 @@ router.put('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});		
 	}
@@ -229,7 +252,61 @@ router.put('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
+			}
+		});
+	}
+	else if(req.params.name == "updatereportingconfig"){
+				
+		var server_uri = req.body['server_uri'];
+		var parameter_name = req.body['parameter_name'];
+		var disable = parseInt(req.body['disable']);
+		var updated_at = new Date();
+
+		Reporting_Configuration.findOneAndUpdate({server_uri: server_uri,parameter_name : parameter_name},{
+			disable : disable,updated_at : updated_at},function(err,data){	
+			if(err){
+				return next(err);
+			}
+			else{
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
+			}
+		});
+	}
+	else if(req.params.name == "writereportingconfig"){
+				
+		var server_uri = req.body['server_uri'];
+		var parameter_name = req.body['parameter_name'];
+		var last_value = parseInt(req.body['last_value']);
+		var updated_at = new Date();
+
+		Reporting_Configuration.findOneAndUpdate({server_uri: server_uri,parameter_name : parameter_name},{
+			last_value : last_value,updated_at : updated_at},function(err,data){	
+			if(err){
+				return next(err);
+			}
+			else{
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
+			}
+		});
+	}
+	else if(req.params.name == "writeAttribReportingconfig"){
+		
+		var server_uri = req.body['server_uri'];
+		var frequency = parseInt(req.body['frequency']);
+		var parameter_name = req.body['parameter_name'];
+		var last_value = parseFloat(req.body['last_value']);
+		var disable = parseInt(req.body['disable']);
+		var updated_at = new Date();
+
+		Reporting_Configuration.findOneAndUpdate({server_uri: server_uri},{
+			frequency : frequency, parameter_name : parameter_name,
+			last_value: last_value,disable : disable,updated_at : updated_at},function(err,data){	
+			if(err){
+				return next(err);
+			}
+			else{
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});
 	}
@@ -250,7 +327,7 @@ router.delete('/:name/:object_id',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});				
 	}
@@ -276,7 +353,7 @@ router.delete('/:name/:object_id',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});
 	}
@@ -284,6 +361,23 @@ router.delete('/:name/:object_id',function(req,res,next){
 		//do nothing
 	}	
 	
+});
+
+router.delete('/:name/:parameter_name/:frequency',function(req,res,next){
+	if(req.params.name == "reportingconfig"){
+		
+		var parameter_name = parseInt(req.params.parameter_name);
+		var frequency = parseInt(req.params.frequency);
+		
+		Reporting_Configuration.findOneAndRemove({parameter_name : parameter_name, frequency : frequency},function(err,data){	
+			if(err){
+				return next(err);
+			}
+			else{
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
+			}
+		});
+	}
 });
 
 /* OPTIONS cors */

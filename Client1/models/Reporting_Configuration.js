@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var connection = mongoose.createConnection('mongodb://localhost:15005/client');
+var connection = mongoose.createConnection('mongodb://localhost:15006/client');
 
 var crcPkIncrementor = require('mongoose-auto-increment');
 crcPkIncrementor.initialize(connection);

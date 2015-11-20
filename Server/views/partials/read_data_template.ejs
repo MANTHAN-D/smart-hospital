@@ -10,8 +10,9 @@
 	<span ng-switch-when="true">
 		{{deviceData.parameter_name}} : {{deviceData.last_value}} recorded at {{deviceData.updated_at}}
 	</span>
+	<span ng-switch-when="false">
+		{{deviceData.message}}
+	</span>
 	</div>
-
-	{{deviceData.parameter_name}} : {{deviceData.last_value}} recorded at {{deviceData.updated_at}}
 <br><br>
 <button ng-click="goHome()">Home</button>

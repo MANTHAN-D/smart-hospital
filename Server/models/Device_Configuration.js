@@ -6,7 +6,7 @@ dcPkIncrementor.initialize(connection);
 
 var Device_Configuration_Schema = new mongoose.Schema({
   object_id: {type : Number,required : true, unique : true},
-  device_id: {type : Number,unique: true},
+  device_id: {type : Number,required : true},
   parameter_name: {type : String,required : true},
   frequency: {type : Number,required : true},
   disable: {type : Number,required : true},

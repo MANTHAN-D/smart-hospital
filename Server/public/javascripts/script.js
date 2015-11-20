@@ -366,6 +366,7 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
                     $scope.modifyDC='false';
                     $scope.parameter = {};
                     $scope.configurations = {};
+                    $scope.readDeviceDataFlag=false;
                   }                    
                   else{
                     $scope.configurations = data[0];
@@ -377,6 +378,7 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
                     else
                       $scope.parameter.disableFlag = 'no';
                     $scope.modifyDC='true';
+                    $scope.readDeviceDataFlag=false;
                   }                    
           }).
           error(function(data,status){            
@@ -434,12 +436,6 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
 
     $scope.readDeviceData = function(device){        
       $scope.deviceData = {};
-      var headers = {
-          'Content-Type' : 'application/json',
-          'Access-Control-Allow-Headers' : 'Origin, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, X-Response-Time, X-PINGOTHER, X-CSRF-Token, X-Requested-With',
-          'Access-Control-Allow-Origin' : '*',
-          'Access-Control-Allow-Methods' : 'POST, GET, PUT, DELETE, OPTIONS'
-      };
 
         $http.get(device.device_uri+'/readDataValue/'+$scope.parameter.name).
           success(function (data){                                                
@@ -447,11 +443,13 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
                   $scope.readDeviceDataFlag=true;
                   console.log(data);
           }).
-          error(function(data,status){            
-            $scope.deviceData=data[0];            
-            console.log('Opps error',data);            
+          error(function(data,status){                      
+            if(status == 0){
+              $scope.readDeviceDataFlag=false;
+              $scope.deviceData = {'message' : 'Device cannot be reached.'};
+            }
+            console.log('Opps error');
           });
-      //alert($scope.readDeviceDataFlag);
     }
 
     $scope.writeDeviceData = function(device){
@@ -566,15 +564,15 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
     $scope.discoverDevices = function(){        
 
         var log =[];
+        $scope.liveDevices=[];
         angular.forEach($scope.devices,function(device){
           $http.get(device.device_uri+'/discover').
           success(function (data){                  
                   console.log(data);                  
+                  $scope.liveDevices.push(device);
           }).
-          error(function(data,status,headers){  
-            if(device.device_id == 1505)
-              $scope.liveDevices.push(device);
-            console.log('Opps error',headers());            
+          error(function(data,status){              
+            console.log('Opps error'+status);          
           });
         },log);               
                 
@@ -630,26 +628,32 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
                       $http.get('/server/chkdevconfig/'+record.device_id).
                         success(function (deviceData){                        
 
-                          Arrparameter_name.push(deviceData[0].parameter_name);
-                          Arrsafe_value.push(deviceData[0].safe_value);
+                          if(typeof(deviceData[0]) != 'undefined')
+                          {
+                            Arrparameter_name.push(deviceData[0].parameter_name);
+                            Arrsafe_value.push(deviceData[0].safe_value);
+                          }
 
-                          $http.get('/server/chkfornotifications/'+record.device_id+'/'+deviceData[0].safe_value).
-                          success(function (notificationData){
-                            if(notificationData.length > 0){
+                          if(typeof(record.device_id) != 'undefined' && typeof(deviceData[0]) != 'undefined')
+                          {                            
+                            $http.get('/server/chkfornotifications/'+record.device_id+'/'+deviceData[0].parameter_name+'/'+deviceData[0].safe_value).
+                            success(function (notificationData){
+                              if(notificationData.length > 0){
 
-                              Arrvalue.push(notificationData[0].value);
+                                Arrvalue.push(notificationData[0].value);
 
-                              $scope.notiRecord.device_id = Arrdevice_id[i];
-                              $scope.notiRecord.room_no = Arrroom_no[i];
-                              $scope.notiRecord.patient_name = Arrpatient_name[i];
-                              $scope.notiRecord.parameter_name = Arrparameter_name[i];
-                              $scope.notiRecord.safe_value = Arrsafe_value[i];
-                              $scope.notiRecord.value = Arrvalue[i];                            
-                              i++;                        
-                            }
-                            $scope.notifications.push($scope.notiRecord);
-                            $scope.notiRecord = {};
-                          });
+                                $scope.notiRecord.device_id = Arrdevice_id[i];
+                                $scope.notiRecord.room_no = Arrroom_no[i];
+                                $scope.notiRecord.patient_name = Arrpatient_name[i];
+                                $scope.notiRecord.parameter_name = Arrparameter_name[i];
+                                $scope.notiRecord.safe_value = Arrsafe_value[i];
+                                $scope.notiRecord.value = Arrvalue[i];                                                     
+                              }                              
+                            });
+                          }
+                          $scope.notifications.push($scope.notiRecord);
+                          $scope.notiRecord = {};                      
+                          i++;
                         });
                     });                          
                 },log);

@@ -10,7 +10,7 @@ var Reporting_Configuration = require('../models/Reporting_Configuration.js');
 var headers = {
     'Content-Type' : 'application/json',
     'Access-Control-Allow-Headers' : 'Origin, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, X-Response-Time, X-PINGOTHER, X-CSRF-Token, X-Requested-With',
-    'Access-Control-Allow-Origin' : '*',
+    'Access-Control-Allow-Origin' : 'http://localhost:3001',
     'Access-Control-Allow-Methods' : 'POST, GET, PUT, DELETE, OPTIONS'
 };
 
@@ -23,7 +23,7 @@ router.get('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});
 	}
@@ -33,7 +33,7 @@ router.get('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});
 	}
@@ -43,7 +43,7 @@ router.get('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});
 	}
@@ -53,12 +53,12 @@ router.get('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});
 	}
 	else if(req.params.name == "discover"){
-			res.end();	
+			res.status(200).set('Access-Control-Allow-Origin', '*').end();
 	}
 	else{
 		//do nothing
@@ -74,7 +74,7 @@ router.get('/:name/:objectId',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});
 	}
@@ -84,7 +84,7 @@ router.get('/:name/:objectId',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});
 	}
@@ -94,7 +94,7 @@ router.get('/:name/:objectId',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});
 	}
@@ -104,7 +104,7 @@ router.get('/:name/:objectId',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});
 	}	
@@ -131,7 +131,7 @@ router.post('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(post);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(post).end();
 			}
 		});				
 	}
@@ -153,7 +153,7 @@ router.post('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(post);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(post).end();
 			}
 		});		
 	}
@@ -177,7 +177,7 @@ router.post('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(post);				
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(post).end();				
 			}
 		});
 	}
@@ -207,7 +207,7 @@ router.put('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(post);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(post).end();
 			}
 		});				
 	}
@@ -231,7 +231,7 @@ router.put('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});		
 	}
@@ -252,7 +252,7 @@ router.put('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});
 	}
@@ -269,7 +269,7 @@ router.put('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});
 	}
@@ -286,7 +286,7 @@ router.put('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});
 	}
@@ -306,7 +306,7 @@ router.put('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});
 	}
@@ -327,7 +327,7 @@ router.delete('/:name/:object_id',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});				
 	}
@@ -353,7 +353,7 @@ router.delete('/:name/:object_id',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});
 	}
@@ -374,7 +374,7 @@ router.delete('/:name/:parameter_name/:frequency',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(data);
+				res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3001').json(data).end();
 			}
 		});
 	}
