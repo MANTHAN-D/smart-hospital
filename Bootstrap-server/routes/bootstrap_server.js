@@ -54,6 +54,65 @@ router.post('/',function(req,res,next){
 	});						
 });
 
+router.post('/bootstrap',function(req,res,next){
+			
+	var manufacturer = req.body['manufacturer'];
+	var model = req.body['model'];
+	var firmware = req.body['firmware'];
+	var serial = parseInt(req.body['serial']);
+	var created_at = new Date();
+	var updated_at = new Date();
+
+	Cofigured_Bootstrap.find({serial: serial},function(err,data){
+		if(err){
+			return next(err);
+		}
+		else{
+			if(data.length > 0){
+				res.status(200).send({server_uri : 'http://localhost:3001/server/devregister', device_id : data.primary_id});
+			}
+			else{
+				Cofigured_Bootstrap.create({manufacturer : manufacturer, model: model,firmware : firmware,serial : serial,
+					created_at : created_at,updated_at : updated_at},function(err,post){	
+					if(err){
+						return next(err);
+					}
+					else{
+						res.status(200).send({server_uri : 'http://localhost:3001/server/devregister', device_id : post.primary_id});
+					}
+				});
+			}
+			res.json(post);
+		}
+	});	
+});
+
+router.get('/bootstrap/:device_id',function(req,res,next){
+			
+	var device_id = req.params.device_id;
+
+	Cofigured_Bootstrap.find({device_id: device_id},function(err,data){
+		if(err){
+			return next(err);
+		}
+		else{
+			if(data.length > 0){
+				res.status(200).send(
+					{
+						server_uri : 'http://localhost:3001/server/devregister',
+						manufacturer : data[0].manufacturer,
+						model : data[0].model,
+						firmware : data[0].firmware,
+						serial : data[0].serial
+					});
+			}
+			else{				
+				res.status(401).send({status : 'Device is not configured'});				
+			}
+		}
+	});	
+});
+
 /* PUT for given id */
 router.put('/',function(req,res,next){
 	

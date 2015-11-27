@@ -5,8 +5,16 @@ angular.module("clientApp", ['ngRoute', 'ngResource'])
       $location.path('/client');
     }
 
+    $scope.bootStrapping = function() {
+      $location.path('/bootStrapping'); 
+    }
+
+    $scope.registration = function() {
+      $location.path('/registration'); 
+    }
+
     $scope.dataTransmission = function() {
-      $location.path('/operations'); 
+      $location.path('/dataTransmission'); 
     }
     
 }])
@@ -259,6 +267,75 @@ angular.module("clientApp", ['ngRoute', 'ngResource'])
     }
 
 }])
+.controller('registrationController', ['$scope','$location','$http','$window', function ($scope,$location,$http,$window) { 
+
+    $scope.goHome = function() {       
+      $location.path('/');
+    }
+
+    $scope.register = function(){      
+
+      $http.get('/client/register').
+          success(function (data){
+            alert(data.status);
+          }).
+          error(function(data,status){            
+              console.log('Opps error',data);
+          });         
+    }
+
+    $scope.update = function(){      
+
+      $http.get('/client/update').
+          success(function (data){
+            alert(data.status);
+          }).
+          error(function(data,status){            
+              console.log('Opps error',data);
+          });         
+    }
+
+    $scope.deregister = function(){      
+
+      $http.get('/client/deregister').
+          success(function (data){
+            alert(data.status);
+          }).
+          error(function(data,status){            
+              console.log('Opps error',data);
+          });         
+    }
+
+}])
+.controller('bootStrappingController', ['$scope','$location','$http','$window', function ($scope,$location,$http,$window) { 
+
+    $scope.goHome = function() {       
+      $location.path('/');
+    }
+
+    $scope.factoryDefaults = function(){      
+
+      $http.get('/client/factorybs').
+          success(function (data){
+            alert(data.status);
+          }).
+          error(function(data,status){            
+              console.log('Opps error',data);
+          });         
+    }
+
+    $scope.initiateBootstrap = function(){      
+
+      $http.get('/client/initiatedbs').
+          success(function (data){
+            alert(data.status);
+          }).
+          error(function(data,status){            
+              console.log('Opps error',data);
+          });         
+    }
+
+}])
   .config(['$routeProvider',function($routeProvider){
   	$routeProvider
   	.when('/', {      
@@ -269,8 +346,16 @@ angular.module("clientApp", ['ngRoute', 'ngResource'])
   		templateUrl: '/client',
   		controller: 'clientController'
   	})
-    .when('/operations', {
-      templateUrl: '/operations',
+    .when('/dataTransmission', {
+      templateUrl: '/dataTransmission',
       controller: 'operationController'
+    })
+    .when('/bootStrapping', {
+      templateUrl: '/bootStrapping',
+      controller: 'bootStrappingController'
+    })
+    .when('/registration', {
+      templateUrl: '/registration',
+      controller: 'registrationController'
     });
   }]);

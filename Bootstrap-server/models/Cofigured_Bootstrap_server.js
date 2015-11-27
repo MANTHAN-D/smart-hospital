@@ -7,7 +7,7 @@ scbsPkIncrementor.initialize(connection);
 
 var Cofigured_Bootstrap_Schema = new mongoose.Schema({
   object_id: {type : Number,required : true, unique : true},
-  device_id: {type : Number},
+  // device_id: {type : Number},
   priority: {type : Number},
   manufacturer: {type : String,required : true},
   model: {type : String,required : true},

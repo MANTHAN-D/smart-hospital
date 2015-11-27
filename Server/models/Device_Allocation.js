@@ -6,7 +6,7 @@ daPkIncrementor.initialize(connection);
 
 var Device_Allocation_Schema = new mongoose.Schema({
   object_id: {type : Number,required : true, unique : true},
-  device_id: {type : Number,unique: true,required: true},
+  device_id: {type : Number,unique: true,required: true, unique : true},
   room_no: {type : Number,required : true},
   patient_id: {type : Number,required : true},
   priority: {type : Number},

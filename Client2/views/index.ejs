@@ -17,8 +17,10 @@
 <h1>DataBase Architecture!</h1>
 <button ng-click="getClient()">Client Database</button>
 <br><br>
-<h1>Transmission Operations!</h1>
-<button ng-click="dataTransmission()">Transmit data</button>
+<h1>Client Operations!</h1>
+<button ng-click="bootStrapping()">Bootstrapping</button>
+<button ng-click="registration()">Registration</button>
+<button ng-click="dataTransmission()">Data Transmission</button>
 </script>
 
 <!-- Client Template-->
@@ -26,9 +28,19 @@
 <% include partials/client_template %>
 </script>
 
-<!--Client Operations Template-->
-<script type="text/ng-template" id="/operations">
-<% include partials/client_operations_template %>
+<!--Client BootStrapping Template-->
+<script type="text/ng-template" id="/bootStrapping">
+<% include partials/client_bootstrapping_template %>
+</script>
+
+<!--Client Registration Template-->
+<script type="text/ng-template" id="/registration">
+<% include partials/client_registration_template %>
+</script>
+
+<!--Client Data Transmission Template-->
+<script type="text/ng-template" id="/dataTransmission">
+<% include partials/client_datatransmission_template %>
 </script>
 
 </body>

@@ -5,7 +5,7 @@
       <tr>
         <th></th>  
         <th>Object Id</th>
-        <th>Device Id</th> 
+        <!--<th>Device Id</th> -->
         <th>Priority</th>
         <th>Manufacturer</th>
         <th>Model</th>
@@ -15,7 +15,7 @@
       <tr ng-repeat="rdata in bss_Resdata">
         <td><input type="checkbox" value='{{rdata.object_id}}' ng-model="rdata.Selected"></td>
         <td><span>{{rdata.object_id}}</span></td>        
-        <td><input type='text' value='{{rdata.device_id}}' ng-model='rdata.device_id'></input></td>
+        <!--<td><input type='text' value='{{rdata.device_id}}' ng-model='rdata.device_id'></input></td>-->
         <td><input type='text'value='{{rdata.priority}}' ng-model='rdata.priority'></input></td>
         <td><input type='text'value='{{rdata.manufacturer}}' ng-model='rdata.manufacturer'></input></td>
         <td><input type='text'value='{{rdata.model}}' ng-model='rdata.model'></input></td>
@@ -31,7 +31,7 @@
   <div ng-switch-default>
     <table border="1" style="width:100%">
       <tr>    
-        <th>Device Id</th> 
+        <!--<th>Device Id</th> -->
         <th>Priority</th>
         <th>Manufacturer</th>
         <th>Model</th>
@@ -39,7 +39,7 @@
         <th>Serial</th>
       </tr>
       <tr>
-        <td><input ng-model='bss.device_id'></input></td>
+        <!--<td><input ng-model='bss.device_id'></input></td>-->
         <td><input ng-model='bss.priority'></input></td>
         <td><input ng-model='bss.manufacturer'></input></td>
         <td><input ng-model='bss.model'></input></td>

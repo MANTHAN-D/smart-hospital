@@ -116,8 +116,7 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
       }
 
       $http.post('/server/'+resource,postdata).
-        success(function (data){             
-              console.log("Create " + data);
+        success(function (data){
               $scope.dr={};
               $scope.dc={};
               $scope.da={};
@@ -169,8 +168,7 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
         angular.forEach($scope.dr_Resdata, function(drdata){
           if(drdata.Selected){               
             $http.put('/server/'+resource,drdata).
-            success(function (vdata){         
-                  console.log("Update success");
+            success(function (vdata){
                   $scope.read(resource);
                   alert('Updated successfully');                     
             }).
@@ -199,8 +197,7 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
         angular.forEach($scope.da_Resdata, function(dadata){
           if(dadata.Selected){               
             $http.put('/server/'+resource,dadata).
-            success(function (vdata){         
-                  console.log("Update success");
+            success(function (vdata){
                   $scope.read(resource);
                   alert('Updated successfully');                     
             }).
@@ -250,9 +247,8 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
       if(resource == 'devregister'){
         angular.forEach($scope.dr_Resdata, function(drdata){
           if(drdata.Selected){               
-            $http.delete('/server/'+resource+'/'+drdata.object_id).
-            success(function (vdata){         
-                  console.log("Delete success");
+            $http.delete('/server/'+resource+'/'+drdata.device_id).
+            success(function (vdata){
                   $scope.read(resource);
                   alert('Deleted successfully');
             }).
@@ -267,7 +263,6 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
           if(dcdata.Selected){               
             $http.delete('/server/'+resource+'/'+dcdata.object_id).
             success(function (vdata){         
-                  console.log("Delete success");
                   $scope.read(resource);
                   alert('Deleted successfully');
             }).
@@ -281,8 +276,7 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
         angular.forEach($scope.da_Resdata, function(dadata){
           if(dadata.Selected){               
             $http.delete('/server/'+resource+'/'+dadata.object_id).
-            success(function (vdata){         
-                  console.log("Delete success");
+            success(function (vdata){
                   $scope.read(resource);
                   alert('Deleted successfully');
             }).
@@ -296,8 +290,7 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
         angular.forEach($scope.patient_Resdata, function(padata){
           if(padata.Selected){               
             $http.delete('/server/'+resource+'/'+padata.object_id).
-            success(function (vdata){         
-                  console.log("Delete success");
+            success(function (vdata){
                   $scope.read(resource);
                   alert('Deleted successfully');
             }).
@@ -311,8 +304,7 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
         angular.forEach($scope.parecord_Resdata, function(parecorddata){
           if(parecorddata.Selected){               
             $http.delete('/server/'+resource+'/'+parecorddata.object_id).
-            success(function (vdata){         
-                  console.log("Delete success");
+            success(function (vdata){
                   $scope.read(resource);
                   alert('Deleted successfully');
             }).
@@ -441,7 +433,6 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
           success(function (data){                                                
                   $scope.deviceData=data[0];
                   $scope.readDeviceDataFlag=true;
-                  console.log(data);
           }).
           error(function(data,status){                      
             if(status == 0){
@@ -523,9 +514,7 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
           });
     }
 
-    $scope.deleteDeviceRecord = function(device){
-        
-        var server_uri='http://localhost:3001/server/patient_record';        
+    $scope.deleteDeviceRecord = function(device){                  
 
         $http.delete('/server/deletedevconfigrecord/'+parseInt($scope.device.device_id)+'/'+$scope.parameter.name).
           success(function (data){
@@ -551,8 +540,7 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
     $scope.executeOnDevice = function(device){        
 
         $http.get(device.device_uri+'/execute/').
-          success(function (data){                  
-                  console.log(data);
+          success(function (data){
                   alert("Execution Successful");
           }).
           error(function(data,status){            
@@ -567,8 +555,7 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
         $scope.liveDevices=[];
         angular.forEach($scope.devices,function(device){
           $http.get(device.device_uri+'/discover').
-          success(function (data){                  
-                  console.log(data);                  
+          success(function (data){               
                   $scope.liveDevices.push(device);
           }).
           error(function(data,status){              
@@ -601,61 +588,15 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
     $scope.getNotifications = function(){
       var log=[];
       $scope.notifications=[];
-      $scope.notiRecord={};
       var i=0;
 
-      var resource = 'devallocation';
-
-      $http.get('/server/'+resource).
-        success(function (allocateddevices){                                          
-                angular.forEach(allocateddevices,function(record){                
-
-                  //fetching patient name
-                  $http.get('/server/patient/'+record.patient_id).
-                    success(function (patientData){
-
-                      //fetching parameter name and safe value
-                      $http.get('/server/chkdevconfig/'+record.device_id).
-                        success(function (deviceDataSet){
-                          
-                          angular.forEach(deviceDataSet,function(deviceData){
-                            if(typeof(deviceData) != 'undefined')
-                            {
-                              $http.get('/server/chkfornotifications/'+record.device_id+'/'+deviceData.parameter_name+'/'+deviceData.safe_value).
-                              success(function (notificationData){
-                                if(notificationData.length > 0){
-
-                                  // $scope.notiRecord.device_id = Arrdevice_id[i];
-                                  // $scope.notiRecord.room_no = Arrroom_no[i];
-                                  // $scope.notiRecord.patient_name = Arrpatient_name[i];                                
-                                  // $scope.notiRecord.parameter_name = Arrparameter_name[i];
-                                  // $scope.notiRecord.safe_value = Arrsafe_value[i];
-                                  // $scope.notiRecord.value = Arrvalue[i];
-
-                                  $scope.notiRecord.device_id = record.device_id;
-                                  $scope.notiRecord.room_no = record.room_no;
-                                  $scope.notiRecord.patient_name = patientData[0].patient_name;                                
-                                  $scope.notiRecord.parameter_name = deviceData.parameter_name;
-                                  $scope.notiRecord.safe_value = deviceData.safe_value;
-                                  $scope.notiRecord.value = notificationData[0].value;
-
-                                  $scope.notifications.push($scope.notiRecord);
-                                  // i++;
-                                  $scope.notiRecord = {};
-                                }                              
-                              });
-                            }
-                          });
-                          // else{
-                            // i++;
-                          // }                          
-                        });
-                    });                          
-                },log);
+      $http.get('/server/readNotifications').
+        success(function (notificationResults){
+          $scope.notifications = notificationResults;
         }).
         error(function(data,status){            
           console.log('Opps error',data);            
-        });
+        });      
     }
 
     $scope.goHome = function() {       

@@ -1,4 +1,6 @@
 var express = require('express');
+var request = require('request');
+
 var router = express.Router();
 
 var Device_Register = require('../models/Device_Register.js');
@@ -6,6 +8,7 @@ var Device_Configuration = require('../models/Device_Configuration.js');
 var Device_Allocation = require('../models/Device_Allocation.js');
 var Patient = require('../models/Patient.js');
 var Patient_Records = require('../models/Patient_Records.js');
+var Notification_Records = require('../models/Notification_Records.js');
 
 var headers = {
     'Content-Type' : 'application/json',
@@ -59,6 +62,16 @@ router.get('/:name',function(req,res,next){
 	}
 	else if(req.params.name == "patient_record"){
 		Patient_Records.find(function(err,data){
+			if(err){
+				return next(err);
+			}
+			else{
+				res.json(data);
+			}
+		});
+	}
+	else if(req.params.name == "readNotifications"){
+		Notification_Records.find(null,null,{sort : {priority : 1, created_at : -1}},function(err,data){
 			if(err){
 				return next(err);
 			}
@@ -134,33 +147,32 @@ router.get('/:name/:objectId',function(req,res,next){
 				res.json(data);
 			}
 		});
-	}
+	}	
 	else{
 		//do nothing
 	}	
 });
 
 /* For determining notifications */
-router.get('/:name/:deviceId/:parameter_name/:safe_value',function(req,res,next){
-	if(req.params.name == "chkfornotifications"){		
-		Patient_Records.find({device_id: parseInt(req.params.deviceId),value : {$gt: parseFloat(req.params.safe_value)},
-			parameter_name : req.params.parameter_name},
-			null,{sort : {created_at : -1}},function(err,data){
-			if(err){
-				return next(err);
-			}
-			else{				
-				res.json(data);
-			}
-		});
-	}
-});
+// router.get('/:name/:deviceId/:parameter_name/:safe_value',function(req,res,next){
+// 	if(req.params.name == "chkfornotifications"){		
+// 		Patient_Records.find({device_id: parseInt(req.params.deviceId),value : {$gt: parseFloat(req.params.safe_value)},
+// 			parameter_name : req.params.parameter_name},
+// 			null,{sort : {created_at : -1}},function(err,data){
+// 			if(err){
+// 				return next(err);
+// 			}
+// 			else{				
+// 				res.json(data);
+// 			}
+// 		});
+// 	}
+// });
 
 /* POST create */
 router.post('/:name',function(req,res,next){
 	
 	if(req.params.name == "devregister"){
-		// var object_id = parseInt(req.body['object_id']);
 		var device_id = parseInt(req.body['device_id']);
 		var device_uri = req.body['device_uri'];
 		var manufacturer = req.body['manufacturer'];
@@ -176,7 +188,8 @@ router.post('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				res.json(post);
+				// res.json(post);
+				res.status(200).send({status : 'Registration successfull'});
 			}
 		});				
 	}
@@ -249,6 +262,117 @@ router.post('/:name',function(req,res,next){
 
 		Patient_Records.create({device_id : device_id,parameter_name : parameter_name,
 			value: value,created_at : created_at,updated_at : updated_at},function(err,post){	
+			if(err){
+				return next(err);
+			}
+			else{
+				// res.json(post);
+			}
+		});
+
+		Device_Configuration.find({device_id: device_id, parameter_name : parameter_name},function(err,data){
+			if(err){
+				return next(err);
+			}
+			else{
+				var safe_value = data[0].safe_value;
+				Device_Allocation.find({device_id: device_id},function(err,data){
+					if(err){
+						return next(err);
+					}
+					else{
+						var patient_id = data[0].patient_id;
+						var room_no = data[0].room_no;
+						var priority = data[0].priority;
+						
+						Patient.find({patient_id: patient_id},function(err,data){
+							if(err){
+								return next(err);
+							}
+							else{
+								var patient_name = data[0].patient_name;
+								var created_at = new Date();
+								var updated_at = new Date();
+								Notification_Records.create({room_no : room_no, device_id : device_id, 
+									patient_name : patient_name, parameter_name : parameter_name, value : value,safe_value : safe_value,
+									 priority : priority, created_at : created_at, updated_at : updated_at}, function(err,data){
+									if(err){
+										return next(err);
+									}
+									else{
+										res.status(200).send({message : 'Data posted.!'});
+									}
+								});
+							}
+						});
+					}
+				});
+
+			}
+		});
+
+		/**/
+		// request.get('http://localhost:3001/server/chkSafeValue/device_id/parameter_name',
+		// 	function(error,response,body){
+		// 		if(error){
+		// 			console.log("Error : "+ error);
+		// 		}
+		// 		else if(response.statusCode == 200){
+		// 			if(value > body[0].safe_value){
+		// 				//get device allocation information
+		// 				var safe_value = body[0].safe_value;
+		// 				request.get('http://localhost:3001/server/allocatedDevice/device_id',
+		// 					function(error, response, body){
+		// 						if(error){
+		// 							console.log("Error : "+ error);
+		// 						}
+		// 						else if(response.statusCode == 200){
+		// 							var room_no = body[0].room_no;
+		// 							var priority = body[0].priority;
+		// 							var patient_id = body[0].patient_id;
+		// 							// get patient data
+		// 							request.get('http://localhost:3001/server/patient/patient_id',
+		// 								function(error,response,body){
+		// 									if(error){
+		// 										console.log('Error : ' + error);
+		// 									}
+		// 									else if(response.statusCode == 200){
+		// 										var patient_name = body[0].patient_name;
+
+		// 									}
+		// 									else{
+		// 										console.log("Patient information returned with status : " + response.statusCode);
+		// 									}
+		// 								});
+		// 						}
+		// 						else{
+		// 							console.log("Allocation response returned with status : " + response.statusCode);
+		// 						}
+
+		// 				});
+		// 				Notification_Records.create();
+		// 			}
+		// 		}
+		// 		else{
+		// 			console.log("Safe value check response returned with status : " + response.statusCode);
+		// 		}
+		// });
+		/**/
+
+	}
+	else if(req.params.name == "generateNotification"){
+		
+		var room_no = parseInt(req.body['room_no']);
+		var device_id = parseInt(req.body['device_id']);
+		var patient_name = req.body['patient_name'];
+		var parameter_name = req.body['parameter_name'];
+		var value = parseFloat(req.body['value']);
+		var safe_value = parseFloat(req.body['safe_value']);	
+		var created_at = new Date();
+		var updated_at = new Date();
+
+		Notification_Records.create({room_no : room_no, device_id : device_id, patient_name : patient_name,
+		 parameter_name : parameter_name, value: value, safe_value: safe_value,created_at : created_at,updated_at : updated_at},function(err,post){	
 			if(err){
 				return next(err);
 			}
@@ -405,21 +529,53 @@ router.put('/:name',function(req,res,next){
 	}	
 });
 
+router.put('/devregister/:device_id',function(req,res,next){
+		
+	var device_id = req.params.device_id;
+	var device_uri = req.body['device_uri'];
+	var manufacturer = req.body['manufacturer'];
+	var model = req.body['model'];
+	var firmware = req.body['firmware'];
+	var serial = parseInt(req.body['serial']);
+	var updated_at = new Date();
+
+	Device_Register.findOneAndUpdate({device_id : device_id},{
+		device_uri : device_uri, manufacturer : manufacturer,
+		model: model,firmware : firmware,serial : serial,updated_at : updated_at},function(err,post){	
+		if(err){
+			return next(err);
+		}
+		else{
+			res.status(200).send({status : 'Updation successfull'});
+		}
+	});				
+
+});
+
 /* DELETE for given id */
 router.delete('/:name/:object_id',function(req,res,next){
 	
 
 	if(req.params.name == "devregister"){
-		var object_id = req.params.object_id;	
+		var device_id = req.params.object_id;	
 
-		Device_Register.findOneAndRemove({object_id : object_id},function(err,data){	
+		Device_Allocation.remove({device_id : device_id}, function(err){
 			if(err){
+				console.log('Error unallocating device : '+ err);
 				return next(err);
 			}
 			else{
-				res.json(data);
+				Device_Register.findOneAndRemove({device_id : device_id},function(err,data){	
+					if(err){
+						return next(err);
+					}
+					else{
+						// res.json(data);
+						res.status(200).send({status : 'De-Registration successfull.'});
+					}
+				});
 			}
-		});				
+		});			
 	}
 	else if(req.params.name == "devconfig"){
 		
@@ -485,12 +641,20 @@ router.delete('/:name/:device_id/:parameter_name',function(req,res,next){
 		var device_id = req.params.device_id;
 		var parameter_name = req.params.parameter_name;
 		
-		Device_Configuration.findOneAndRemove({device_id : device_id, parameter_name : parameter_name},function(err,data){	
+		Device_Allocation.remove({device_id : device_id}, function(err){
 			if(err){
+				console.log('Error unallocating device : '+ err);
 				return next(err);
 			}
 			else{
-				res.json(data);
+				Device_Configuration.findOneAndRemove({device_id : device_id, parameter_name : parameter_name, disable : 0},function(err,data){	
+					if(err){
+						return next(err);
+					}
+					else{
+						res.json(data);
+					}
+				});
 			}
 		});		
 	}
