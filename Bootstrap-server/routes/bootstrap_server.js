@@ -68,8 +68,8 @@ router.post('/bootstrap',function(req,res,next){
 			return next(err);
 		}
 		else{
-			if(data.length > 0){
-				res.status(200).send({server_uri : 'http://localhost:3001/server/devregister', device_id : data.primary_id});
+			if(data.length > 0){								
+				res.status(200).json({server_uri : 'http://localhost:3001/server/devregister', device_id : data[0].object_id}).send();
 			}
 			else{
 				Cofigured_Bootstrap.create({manufacturer : manufacturer, model: model,firmware : firmware,serial : serial,
@@ -78,11 +78,10 @@ router.post('/bootstrap',function(req,res,next){
 						return next(err);
 					}
 					else{
-						res.status(200).send({server_uri : 'http://localhost:3001/server/devregister', device_id : post.primary_id});
+						res.status(200).json({server_uri : 'http://localhost:3001/server/devregister', device_id : post.object_id});
 					}
 				});
 			}
-			res.json(post);
 		}
 	});	
 });
@@ -91,7 +90,7 @@ router.get('/bootstrap/:device_id',function(req,res,next){
 			
 	var device_id = req.params.device_id;
 
-	Cofigured_Bootstrap.find({device_id: device_id},function(err,data){
+	Cofigured_Bootstrap.find({object_id: device_id},function(err,data){
 		if(err){
 			return next(err);
 		}
@@ -125,17 +124,32 @@ router.put('/',function(req,res,next){
 	var serial = req.body['serial'];		
 	var updated_at = new Date();
 
-	Cofigured_Bootstrap.findOneAndUpdate({object_id : object_id},{
-		priority : priority, device_id : device_id,manufacturer : manufacturer,
-		model: model,firmware : firmware,serial : serial,updated_at : updated_at},function(err,data){	
-		if(err){
-			return next(err);
-		}
-		else{			
-			// res.json(data);
-			res.json(data);
-		}
-	});			
+	if(typeof(priority) == 'undefined'){
+		Cofigured_Bootstrap.findOneAndUpdate({object_id : object_id},{
+			device_id : device_id,manufacturer : manufacturer,
+			model: model,firmware : firmware,serial : serial,updated_at : updated_at},function(err,data){	
+			if(err){
+				return next(err);
+			}
+			else{			
+				// res.json(data);
+				res.json(data);
+			}
+		});
+	}
+	else{
+		Cofigured_Bootstrap.findOneAndUpdate({object_id : object_id},{
+			priority : priority, device_id : device_id,manufacturer : manufacturer,
+			model: model,firmware : firmware,serial : serial,updated_at : updated_at},function(err,data){	
+			if(err){
+				return next(err);
+			}
+			else{			
+				// res.json(data);
+				res.json(data);
+			}
+		});
+	}			
 });
 
 /* DELETE for given id */

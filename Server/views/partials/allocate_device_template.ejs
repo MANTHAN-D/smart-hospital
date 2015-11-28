@@ -1,0 +1,22 @@
+<h3>Hospital Management!</h3>	
+
+	Patient : <select ng-options="p.patient_name for p in patients" 
+	ng-model="patient"></select>
+	
+	<br><br>
+
+	Device : <select ng-options="d.device_id for d in devices" 
+	ng-model="device"></select>
+	<br><br>
+
+	Room No : <input type='number' ng-model='patient.room_no'></input>
+	<br><br>
+	Priority : <input type='number' ng-model='patient.priority'></input>
+	<br><br>	
+	<button ng-click="allocateDevice()">Allocate Device</button>		
+	<br>		
+
+
+<br><br>
+
+<button ng-click="goHome()">Home</button>

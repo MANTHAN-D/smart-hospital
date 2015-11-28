@@ -40,6 +40,14 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
     $scope.createDeviceRecord = function(){
       $location.path('/createDatatemplate'); 
     }
+
+    $scope.addPatient = function(){
+      $location.path('/addpatienttemplate'); 
+    }
+
+    $scope.allocateDevice = function(){
+      $location.path('/allocatedevicetemplate'); 
+    }
     
 }])
   .controller('serverController', ['$scope','$location','$http','$window',function ($scope,$location,$http,$window) {
@@ -719,6 +727,77 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
           });
     }
 }])
+.controller('hospitalMgmtController', ['$scope','$location','$http','$window',function ($scope,$location,$http,$window) {
+          
+
+    $scope.devices={};
+    $scope.device={};
+    $scope.patients={};
+    $scope.patient={};
+
+    var resource = 'unallocatedDevices';
+    var postdata = {};
+
+    $http.get('/server/'+resource).
+      success(function (data){                              
+          $scope.devices = data;               
+      }).
+      error(function(data,status){            
+        console.log('Opps error',data);            
+      });
+
+    $http.get('/server/patient').
+      success(function (data){                              
+          $scope.patients = data;               
+      }).
+      error(function(data,status){            
+        console.log('Opps error',data);            
+      });    
+
+    $scope.goHome = function() {       
+      $location.path('/');
+    }
+
+    $scope.registerPatient = function(){
+
+      postdata = {
+        patient_name : $scope.patient.patient_name,
+        symptoms : $scope.patient.symptoms
+      };     
+
+      $http.post('/server/patient',postdata).
+        success(function (results){
+          alert('Patient Registered Successfully');
+          $scope.patient = {};
+        }).
+        error(function(data,status){            
+          console.log('Opps error',data); 
+          alert('Patient Registration failed');
+          $scope.patient = {};           
+        });      
+    }
+
+    $scope.allocateDevice = function(){
+
+        postdata = {
+          device_id : $scope.device.device_id,
+          patient_id : $scope.patient.patient_id,
+          room_no : $scope.patient.room_no,
+          priority : $scope.patient.priority
+        };
+
+        $http.post('/server/devallocation',postdata).
+          success(function (data){                                                
+              alert('Device allocated successfully.');                   
+          }).
+          error(function(data,status){            
+            console.log('Opps error',data);            
+            alert('Device allocation failed.');
+          });
+          $scope.device={};
+          $scope.patient={};
+    }    
+}])
   .config(['$routeProvider',function($routeProvider){
   	$routeProvider
   	.when('/', {      
@@ -764,5 +843,13 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
     .when('/discovertemplate', {
       templateUrl: '/discovertemplate',
       controller: 'operationController'
+    })
+    .when('/addpatienttemplate', {
+      templateUrl: '/addpatienttemplate',
+      controller: 'hospitalMgmtController'
+    })
+    .when('/allocatedevicetemplate', {
+      templateUrl: '/allocatedevicetemplate',
+      controller: 'hospitalMgmtController'
     });
   }]);

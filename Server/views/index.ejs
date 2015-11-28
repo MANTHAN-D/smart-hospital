@@ -29,6 +29,10 @@
 <h1>Information Management!</h1>
 <button ng-click="notify()">Notify</button>
 <button ng-click="observe()">Observe</button>
+<br><br>
+<h1>Hospital Management!</h1>
+<button ng-click="addPatient()">Add Patient</button>
+<button ng-click="allocateDevice()">Allocate Device</button>
 </script>
 
 <!--Server Database Template-->
@@ -80,6 +84,17 @@
 <script type="text/ng-template" id="/discovertemplate">
 <% include partials/discover_template %>
 </script>
+
+<!--Add Patient Template-->
+<script type="text/ng-template" id="/addpatienttemplate">
+<% include partials/add_patient_template %>
+</script>
+
+<!--Allocate Device Template-->
+<script type="text/ng-template" id="/allocatedevicetemplate">
+<% include partials/allocate_device_template %>
+</script>
+
 
 </body>
 </html>

@@ -249,9 +249,11 @@ angular.module("clientApp", ['ngRoute', 'ngResource'])
                       $http.post(record.server_uri,postdata).
                         success(function (data){                        
                             rmessage ='Data posted successfully';
+                            alert(rmessage);
                         }).
                         error(function(data,status){            
                           rmessage = 'Data sending failed';
+                          alert(rmessage);
                         });
 
                         this.push(rmessage);
@@ -315,7 +317,7 @@ angular.module("clientApp", ['ngRoute', 'ngResource'])
 
     $scope.factoryDefaults = function(){      
 
-      $http.get('/client/factorybs').
+      $http.get('/client/defaultbs').
           success(function (data){
             alert(data.status);
           }).

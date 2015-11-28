@@ -79,6 +79,30 @@ router.get('/:name',function(req,res,next){
 				res.json(data);
 			}
 		});
+	}
+	else if(req.params.name == "unallocatedDevices"){
+		Device_Allocation.find(function(err,data){
+			if(err){
+				return next(err);
+			}
+			else{
+
+				var allocatedDeviceId = [];
+				if(data.length > 0){
+					for(var i=0;i<data.length;i++){
+						allocatedDeviceId.push(data[i].device_id);
+					}
+				}
+				Device_Configuration.find({device_id : { $nin : allocatedDeviceId }},function (err,dcdata){
+					if (err){
+						return next(err);
+					}
+					else{
+						res.json(dcdata);
+					}
+				});
+			}
+		});
 	}	
 	else{
 		//do nothing
@@ -275,39 +299,58 @@ router.post('/:name',function(req,res,next){
 				return next(err);
 			}
 			else{
-				var safe_value = data[0].safe_value;
-				Device_Allocation.find({device_id: device_id},function(err,data){
-					if(err){
-						return next(err);
-					}
-					else{
-						var patient_id = data[0].patient_id;
-						var room_no = data[0].room_no;
-						var priority = data[0].priority;
-						
-						Patient.find({patient_id: patient_id},function(err,data){
+				if(data.length > 0){
+				
+					var safe_value = data[0].safe_value;
+					if(value > safe_value){
+						Device_Allocation.find({device_id: device_id},function(err,dadata){
 							if(err){
 								return next(err);
 							}
 							else{
-								var patient_name = data[0].patient_name;
-								var created_at = new Date();
-								var updated_at = new Date();
-								Notification_Records.create({room_no : room_no, device_id : device_id, 
-									patient_name : patient_name, parameter_name : parameter_name, value : value,safe_value : safe_value,
-									 priority : priority, created_at : created_at, updated_at : updated_at}, function(err,data){
-									if(err){
-										return next(err);
-									}
-									else{
-										res.status(200).send({message : 'Data posted.!'});
-									}
-								});
-							}
+								if(dadata.length > 0){
+								
+									var patient_id = dadata[0].patient_id;
+									var room_no = dadata[0].room_no;
+									var priority = dadata[0].priority;
+									
+									Patient.find({patient_id: patient_id},function(err,padata){
+										if(err){
+											return next(err);
+										}
+										else{
+											var patient_name = padata[0].patient_name;
+											var created_at = new Date();
+											var updated_at = new Date();
+											Notification_Records.create({room_no : room_no, device_id : device_id, 
+												patient_name : patient_name, parameter_name : parameter_name, value : value,safe_value : safe_value,
+												 priority : priority, created_at : created_at, updated_at : updated_at}, function(err,data){
+												if(err){
+													return next(err);
+												}
+												else{
+													// res.status(200).send({message : 'Data posted.!'});
+													res.status(200).set('Access-Control-Allow-Origin', '*').json({message : 'Data posted.!'}).end();
+												}
+											});
+										}
+									});
+								}
+								else{
+									// res.status(200).send({message : 'Data posted.!'});
+									res.status(200).set('Access-Control-Allow-Origin', '*').json({message : 'Data posted.!'}).end();
+								}
+							}						
 						});
 					}
-				});
-
+					else{
+						res.status(200).set('Access-Control-Allow-Origin', '*').json({message : 'Data posted.!'}).end();
+					}
+				}
+				else{
+					// res.status(200).send({message : 'Data posted.!'});
+					res.status(200).set('Access-Control-Allow-Origin', '*').json({message : 'Data posted.!'}).end();
+				}
 			}
 		});
 
