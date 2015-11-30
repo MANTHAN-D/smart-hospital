@@ -217,7 +217,7 @@ angular.module("clientApp", ['ngRoute', 'ngResource'])
       }     
     }
 }])
-.controller('operationController', ['$scope','$location','$http','$window', function ($scope,$location,$http,$window) { 
+.controller('operationController', ['$scope','$location','$http','$window','$interval', function ($scope,$location,$http,$window,$interval) { 
 
     $scope.goHome = function() {       
       $location.path('/');
@@ -228,45 +228,72 @@ angular.module("clientApp", ['ngRoute', 'ngResource'])
       var rmessage;
       var postdata={};
       var ccbs={};
+      $scope.delay = 10;
+      $scope.disable = 0;
 
-      $http.get('/client/configbs').
-          success(function (ccbsdata){
+      $scope.Timer = $interval(function () {
+        console.log("sending data..")
 
-            $http.get('/client/reportingconfig').
-                success(function (data){                           
-                    angular.forEach(data,function(record){
-                      
-                      record.last_value = Math.floor((Math.random() * 100) + 1);
-                      
-                      $http.put('/client/reportingconfig',record);
+        //delay = <db_query>
+        //disable = <db_query>
 
-                      postdata = {
-                        device_id : ccbsdata[0].device_id,
-                        parameter_name : record.parameter_name,          
-                        value : record.last_value
-                      };
+        if($scope.disable == 0){
 
-                      $http.post(record.server_uri,postdata).
-                        success(function (data){                        
-                            rmessage ='Data posted successfully';
-                            alert(rmessage);
-                        }).
-                        error(function(data,status){            
-                          rmessage = 'Data sending failed';
-                          alert(rmessage);
-                        });
+            $http.get('/client/configbs').
+                success(function (ccbsdata){
 
-                        this.push(rmessage);
-                    },log);                         
+                  $http.get('/client/reportingconfig').
+                      success(function (data){                           
+                          angular.forEach(data,function(record){
+                            
+                            record.last_value = Math.floor((Math.random() * 130) + 1);
+                            $scope.delay = record.frequency;
+                            $scope.disable = record.disable;
+                            
+                            $http.put('/client/reportingconfig',record);
+
+                            postdata = {
+                              device_id : ccbsdata[0].device_id,
+                              parameter_name : record.parameter_name,          
+                              value : record.last_value
+                            };
+
+                            $http.post(record.server_uri,postdata).
+                              success(function (data){                        
+                                  rmessage ='Data posted successfully';
+                                  alert(rmessage);
+                              }).
+                              error(function(data,status){            
+                                rmessage = 'Data sending failed';
+                                alert(rmessage);
+                              });
+
+                              this.push(rmessage);
+                          },log);                         
+                      }).
+                      error(function(data,status){            
+                        console.log('Opps error',data);
+                      });                
                 }).
-                error(function(data,status){            
-                  console.log('Opps error',data);
-                });                
-          }).
-          error(function(ccbsdata,status){            
-            console.log('Opps error',ccbsdata);
-          });
+                error(function(ccbsdata,status){            
+                  console.log('Opps error',ccbsdata);
+                });
+        }
+        else{
+          if (angular.isDefined($scope.Timer)) {
+              console.log("Stopping transmission..")
+              $interval.cancel($scope.Timer);
+          }
+        }
+      }, $scope.delay*1000);
     }
+
+    $scope.stoptransmit = function () {
+        if (angular.isDefined($scope.Timer)) {
+            console.log("Stopping transmission..")
+            $interval.cancel($scope.Timer);
+        }
+      }
 
 }])
 .controller('registrationController', ['$scope','$location','$http','$window', function ($scope,$location,$http,$window) { 
