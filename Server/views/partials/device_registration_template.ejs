@@ -15,13 +15,13 @@
 </style>
 
 
-<div ng-switch="readDA">
+<div ng-switch="readDR">
 
 
 
     <fieldset class="scheduler-border">
         <legend class="scheduler-border">
-    <h2><span class="label label-primary">Device Allocation</span></h2>
+    <h2><span class="label label-primary">Device Registration</span></h2>
             </legend>
     <br>
 
@@ -55,51 +55,66 @@
         </table>
         <br><br>
         <div class="col-sm-offset-2 col-sm-10">
-            <button class="btn btn-warning col-sm-offset-1" ng-click="clear()">Back</button>
-            <button class="btn btn-primary col-sm-offset-1" ng-click="update()">Update</button>
-            <button class="btn btn-danger col-sm-offset-1" ng-click="delete()">Deallocate</button>
+            <button class="btn btn-warning col-sm-offset-1" ng-click="clear('devregister')">Back</button>
+            <button class="btn btn-primary col-sm-offset-1" ng-click="update('devregister')">Update</button>
+            <button class="btn btn-danger col-sm-offset-1" ng-click="delete('devregister')">Delete</button>
         </div>
     </div>
     <div ng-switch-default>
         <form class="form-horizontal" role="form">
             <div class="form-group">
                 <label class="control-label col-sm-2"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                    Patient : </label>
+                    Device ID: </label>
 
                 <div class="col-sm-5">
-                	<select ng-options="p.patient_name for p in patients" 
-						ng-model="patient" class="form-control" placeholder="Select Patient"></select>                    
+                    <input ng-model='dr.device_id' class="form-control" placeholder="Enter Device ID">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2"><span class="glyphicon glyphicon-link" aria-hidden="true"></span>
-                    Device : </label>
+                    Device URI: </label>
 
                 <div class="col-sm-5">
-                    <select ng-options="d.device_id for d in devices" 
-						ng-model="device" class="form-control" placeholder="Select Device"></select>                    
+                    <input ng-model='dr.device_uri' class="form-control" placeholder="Enter Device URI">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                    Room No: </label>
+                    Manufacturer: </label>
 
                 <div class="col-sm-5">
-                    <input type='number' ng-model='patient.room_no' class="form-control" placeholder="Enter Room number"></input>                    
+                    <input ng-model='dr.manufacturer' class="form-control" placeholder="Enter Manufacturer">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
-                    Priority : </label>
+                    Model: </label>
 
                 <div class="col-sm-5">
-                    <input type='number' ng-model='patient.priority' class="form-control" placeholder="Enter priority"></input>
+                    <input ng-model='dr.model' class="form-control" placeholder="Enter Model">
                 </div>
-            </div>            
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2"><span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+                    Firmware: </label>
+
+                <div class="col-sm-5">
+                    <input ng-model='dr.firmware' class="form-control" placeholder="Enter Firmware">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2"><span class="glyphicon glyphicon-qrcode"
+                                                            aria-hidden="true"></span> Serial: </label>
+
+                <div class="col-sm-5">
+                    <input ng-model='dr.serial' class="form-control" placeholder="Enter Serial Number">
+                </div>
+            </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button class="btn btn-warning col-sm-offset-1" ng-click="goHome()">Back</button>
-                    <button class="btn btn-success col-sm-offset-1" ng-click="allocateDevice()">Allocate Device</button>
+                    <button class="btn btn-success col-sm-offset-1" ng-click="create('devregister')">Create</button>
+                    <button class="btn btn-info col-sm-offset-1" ng-click="read('devregister')">View/Modify</button>
                 </div>
             </div>
         </form>

@@ -42,8 +42,9 @@
         <br><br>
 
         <div class="col-sm-offset-2 col-sm-10">
-            <button class="btn btn-warning col-sm-offset-1" ng-click="clear()">Back</button>
-            <button class="btn btn-primary col-sm-offset-1" ng-click="update()">Update</button>
+            <button class="btn btn-warning col-sm-offset-1" ng-click="clear('patient')">Back</button>
+            <button class="btn btn-primary col-sm-offset-1" ng-click="update('patient')">Update</button>
+            <button class="btn btn-danger col-sm-offset-1" ng-click="delete('patient')">Delete</button>
         </div>
     </div>
     <div ng-switch-default>
@@ -67,8 +68,8 @@
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button class="btn btn-warning col-sm-offset-1" ng-click="goHome()">Back</button>
-                    <button class="btn btn-success col-sm-offset-1" ng-click="registerPatient()">Register</button>
-                    <button class="btn btn-info col-sm-offset-1" ng-click="read()">View/Modify</button>
+                    <button class="btn btn-success col-sm-offset-1" ng-click="create('patient')">Create</button>
+                    <button class="btn btn-info col-sm-offset-1" ng-click="read('patient')">View/Modify</button>
                 </div>
             </div>
         </form>

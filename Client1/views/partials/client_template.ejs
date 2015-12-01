@@ -1,8 +1,14 @@
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+<body>
+<div class="container">
+
 <h3>Client Database Architecture!</h3>
 <div ng-switch="readFBS">
   	<div ng-switch-when="true">    
-	    <table border="1">
+	    <table  class="table table-bordered">
 	    <caption><b>Factory_Bootstrap<b></caption>
+	    <thead>
 	      <tr>
 	        <th></th>  
 	        <th>Object Id</th>
@@ -12,7 +18,10 @@
 	        <th>Model</th>
 	        <th>Firmware</th>
 	        <th>Serial</th>
+	      
 	      </tr>       
+	      </thead>
+	      <tbody>
 	      <tr ng-repeat="cfbsdata in cfbs_Resdata">
 	        <td><input type="checkbox" value='{{cfbsdata.object_id}}' ng-model="cfbsdata.Selected"></td>
 	        <td><span>{{cfbsdata.object_id}}</span></td>        
@@ -23,16 +32,18 @@
 	        <td><input type='text'value='{{cfbsdata.firmware}}' ng-model='cfbsdata.firmware'></input></td>
 	        <td><input type='text'value='{{cfbsdata.serial}}' ng-model='cfbsdata.serial'></input></td>
 	      </tr>
+	      </tbody>
 	    </table> 
 	    <br><br>
-	    <button ng-click="clear('factorybs')">Clear</button>
-	    <button ng-click="update('factorybs')">Update</button>
-	    <button ng-click="delete('factorybs')">Delete</button>
+	    <button type="button" class="btn btn-primary custom3"ng-click="clear('factorybs')">Clear</button>&nbsp;&nbsp;
+	    <button type="button" class="btn btn-primary custom3"ng-click="update('factorybs')">Update</button>&nbsp;&nbsp;
+	    <button type="button" class="btn btn-primary custom3" ng-click="delete('factorybs')">Delete</button>
 	    <br><br>
 	</div>
 	<div ng-switch-default>
-		<table border="1">
+		<table  class="table table-bordered">
 	    <caption><b>Factory_Bootstrap</b></caption>
+	    <thead>
 	      <tr>
 	        <th>Server URI</th> 
 	        <th>Device Id</th>
@@ -40,7 +51,10 @@
 	        <th>Model</th>
 	        <th>Firmware</th>
 	        <th>Serial</th>
+
 	      </tr>
+	      </thead>
+	      <tbody>
 	      <tr>
 	        <td><input ng-model='cfbs.server_uri'></input></td>
 	        <td><input ng-model='cfbs.device_id'></input></td>
@@ -49,18 +63,21 @@
 	        <td><input ng-model='cfbs.firmware'></input></td>
 	        <td><input ng-model='cfbs.serial'></input></td>
 	      </tr>
+	      </tbody>
 	    </table>
 	    <br><br>
-	    <button ng-click="create('factorybs')">Create</button>
-	    <button ng-click="read('factorybs')">View/Modify</button> 
+	    <button type="button" class="btn btn-primary custom3"ng-click="create('factorybs')">Create</button>&nbsp;&nbsp;
+	    <button type="button" class="btn btn-primary custom3" ng-click="read('factorybs')">View/Modify</button> 
 	    <br><br>
 	</div>
 </div>
 <div ng-switch="readCBS">
   	<div ng-switch-when="true">	
-	    <table border="1">
+	    <table  class="table table-bordered">
 	    <caption><b>Configured_Bootstrap</b></caption>
+	      <thead>
 	      <tr>
+
 	        <th></th>  
 	        <th>Object Id</th>
 	        <th>Server URI</th>
@@ -70,7 +87,9 @@
 	        <th>Model</th>
 	        <th>Firmware</th>
 	        <th>Serial</th>
-	      </tr>       
+	      </tr>  
+	      </thead>
+	      <tbody>     
 	      <tr ng-repeat="ccbsdata in ccbs_Resdata">
 	        <td><input type="checkbox" value='{{ccbsdata.object_id}}' ng-model="ccbsdata.Selected"></td>
 	        <td><span>{{ccbsdata.object_id}}</span></td>        
@@ -82,17 +101,20 @@
 	        <td><input type='text'value='{{ccbsdata.firmware}}' ng-model='ccbsdata.firmware'></input></td>
 	        <td><input type='text'value='{{ccbsdata.serial}}' ng-model='ccbsdata.serial'></input></td>
 	      </tr>
+	      </tbody>
 	    </table> 
 	    <br><br>
-	    <button ng-click="clear('configbs')">Clear</button>
-	    <button ng-click="update('configbs')">Update</button>
-	    <button ng-click="delete('configbs')">Delete</button>
+	    <button type="button" class="btn btn-primary custom3"ng-click="clear('configbs')">Clear</button>&nbsp;&nbsp;
+	    <button type="button" class="btn btn-primary custom3" ng-click="update('configbs')">Update</button>&nbsp;&nbsp;
+	    <button type="button" class="btn btn-primary custom3" ng-click="delete('configbs')">Delete</button>
 	    <br><br>
 	</div>
 	<div ng-switch-default>
-		<table border="1">
+		<table class="table table-bordered">
 	    <caption><b>Configured_Bootstrap</b></caption>
+	      <thead>
 	      <tr>    
+
 	        <th>Server URI</th>
 	        <th>Priority</th>
 	        <th>Device Id</th>
@@ -101,6 +123,8 @@
 	        <th>Firmware</th>
 	        <th>Serial</th>
 	      </tr>
+	      </thead>
+	      <tbody>
 	      <tr>
 	        <td><input ng-model='ccbs.server_uri'></input></td>
 	        <td><input ng-model='ccbs.priority'></input></td>
@@ -110,17 +134,20 @@
 	        <td><input ng-model='ccbs.firmware'></input></td>
 	        <td><input ng-model='ccbs.serial'></input></td>
 	      </tr>
+	      </tbody>
 	    </table>
 	    <br><br>
-	    <button ng-click="create('configbs')">Create</button>
-	    <button ng-click="read('configbs')">View/Modify</button> 
+	   <button type="button" class="btn btn-primary custom3" ng-click="create('configbs')">Create</button>&nbsp;&nbsp;
+	   <button type="button" class="btn btn-primary custom3" ng-click="read('configbs')">View/Modify</button> 
 	    <br><br>
 	</div>
 </div>
 <div ng-switch="readCRC">
   	<div ng-switch-when="true">			
-	    <table border="1">
+  	 
+	    <table   class="table table-bordered custom1">
 	    <caption><b>Reporting_Config</b></caption>
+	    <thead>
 	      <tr>
 	        <th></th>  
 	        <th>Object Id</th>
@@ -129,7 +156,9 @@
 	        <th>Parameter Name</th>
 	        <th>Last Value</th>
 	        <th>Disable</th>
-	      </tr>       
+	      </tr>    
+	      </thead>   
+	      <tbody>
 	      <tr ng-repeat="crcdata in crc_Resdata">
 	        <td><input type="checkbox" value='{{crcdata.object_id}}' ng-model="crcdata.Selected"></td>
 	        <td><span>{{crcdata.object_id}}</span></td>        
@@ -139,16 +168,19 @@
 	        <td><input type='text'value='{{crcdata.last_value}}' ng-model='crcdata.last_value'></input></td>
 	        <td><input type='text'value='{{crcdata.disable}}' ng-model='crcdata.disable'></input></td>
 	      </tr>
+	      </tbody>
 	    </table> 
+	    
 	    <br><br>
-	    <button ng-click="clear('reportingconfig')">Clear</button>
-	    <button ng-click="update('reportingconfig')">Update</button>
-	    <button ng-click="delete('reportingconfig')">Delete</button>
+		 <button type="button" class="btn btn-primary custom3" ng-click="clear('reportingconfig')">Clear</button>&nbsp;&nbsp;
+		<button type="button" class="btn btn-primary custom3" ng-click="update('reportingconfig')">Update</button>&nbsp;&nbsp;
+	    <button type="button" class="btn btn-primary custom3" ng-click="delete('reportingconfig')">Delete</button>
 	    <br><br>
 	</div>
   	<div ng-switch-default>
-	    <table border="1">
+	    <table   class="table table-bordered custom1">
 	    <caption><b>Reporting_Config</b></caption>
+	    <thead>
 	      <tr>
 	        <th>Server URI</th> 
 	        <th>Frequency</th>
@@ -156,6 +188,8 @@
 	        <th>Last Value</th>
 	        <th>Disable</th>
 	      </tr>
+	      </thead>
+	      <tbody>
 	      <tr>
 	        <td><input ng-model='crc.server_uri'></input></td>
 	        <td><input ng-model='crc.frequency'></input></td>
@@ -163,13 +197,14 @@
 	        <td><input ng-model='crc.last_value'></input></td>
 	        <td><input ng-model='crc.disable'></input></td>
 	      </tr>
+	      </tbody>
 	    </table>
 	    <br><br>
-	    <button ng-click="create('reportingconfig')">Create</button>
-	    <button ng-click="read('reportingconfig')">View/Modify</button>
+	    <button type="button" class="btn btn-primary custom3" ng-click="create('reportingconfig')">Create</button>&nbsp;&nbsp;
+	    <button type="button" class="btn btn-primary custom3" ng-click="read('reportingconfig')">View/Modify</button>
 	    <br><br> 
     </div>  
 </div>  
-
-<br><br>
-<button ng-click="goHome()">Home</button>
+<div class="panel-footer custom2">
+<button type="button" class="btn-lg btn-link custom1" ng-click="goHome()">Home</button></div>
+</body>

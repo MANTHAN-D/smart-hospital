@@ -2,25 +2,44 @@
 <html ng-app="clientApp">
 
 <head>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-resource.min.js"></script>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
   <script src="javascripts\script.js"></script>
   <title>Client 1</title>
 </head>
 <body>
 
+
 <ng-view></ng-view>
 
 <!-- Home Template-->
 <script type="text/ng-template" id="/home">
-<h1>DataBase Architecture!</h1>
-<button ng-click="getClient()">Client Database</button>
 <br><br>
-<h1>Client Operations!</h1>
-<button ng-click="bootStrapping()">Bootstrapping</button>
-<button ng-click="registration()">Registration</button>
-<button ng-click="dataTransmission()">Data Transmission</button>
+
+<h1 style="color:black;font-family: 'Times New Roman', Times, serif;" >Database Architecture!</h1><br>
+<button type="button" class="btn btn-primary custom" style="border-radius:15px;"ng-click="getClient()">Client Database</button>
+
+<br><br><br>
+
+<h1 style="color:black;font-family: 'Times New Roman', Times, serif;" >Client Operations!</h1><br>
+
+
+<ul >
+  <li ><button type="button" class="btn btn-primary custom" style="border-radius:15px;" ng-click="bootStrapping()">Bootstrapping</button></li><br>
+
+  <li ><button type="button" class="btn btn-primary custom" style="border-radius:15px;" ng-click="registration()"> Registration</li></button><br>
+  <li ><button type="button" class="btn btn-primary custom" style="border-radius:15px;" ng-click="dataTransmission()">DataTransmission</button></li>
+</ul>
+
+
+
+<!-- <button type="button" class="btn btn-default"  ng-click="bootStrapping()">Bootstrapping</button>
+<button type="button" class="btn btn-default" ng-click="registration()">Registration</button>
+<button type="button" class="btn btn-default" ng-click="dataTransmission()">Data Transmission</button>-->
 </script>
 
 <!-- Client Template-->
@@ -42,6 +61,5 @@
 <script type="text/ng-template" id="/dataTransmission">
 <% include partials/client_datatransmission_template %>
 </script>
-
 </body>
 </html>

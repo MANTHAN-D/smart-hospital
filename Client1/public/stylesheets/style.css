@@ -1,8 +1,81 @@
-body {
+/*body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+*/
+body
+{
+
+	background-image: url("http://wallpapershidef.com/wp-content/gallery/background-images-for-websites/website-background-wincustomize-explore-clouds-284048.jpg");
+	margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    vertical-align: middle;
+
+
+}
+
+h3
+{
+
+	color: black;
+	font-family: "Times New Roman", Times, serif;
+}
+h2
+{
+	color: black;
+	font-family: "Times New Roman", Times, serif;
+}
+ul
+{
+	list-style-type: none;
+	margin-left:-45px;
+}
+.panel1
+{
+	padding: auto;
+
+}
+.panel-footer {
+
+	
+	background: none;
+	border:none;
+   
+    margin-top: 20em;
+}
+
+.custom
+{
+	width: 200px;
+	border-radius: 15px;
+	box-shadow:  none;
+
+}
+
+.custom1
+{
+	text-decoration: underline;
+	font-weight: bolder;
+	font-size: 15px;
+
+}
+.custom2 {
+	
+	
+	background: none;
+	border:none;
+   
+    margin-top: 5em;
+}
+.custom3
+{
+	width: 120px;
+	border-radius: 15px;
+	box-shadow:  none;
+
 }

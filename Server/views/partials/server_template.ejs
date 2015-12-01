@@ -1,5 +1,10 @@
-<h3>Server Database Architecture!</h3>
-<div ng-switch="readDR">
+<%- include device_registration_template.ejs %>
+<%- include device_configuration_template.ejs %>
+<%- include device_allocation_template.ejs %>
+<%- include patients_template.ejs %>
+<%- include patient_record_template.ejs %>
+
+<!--<div ng-switch="readDR">
   	<div ng-switch-when="true">    
 	    <table border="1">
 	    <caption><b>Device_Registeration<b></caption>
@@ -56,6 +61,8 @@
 	    <br><br>
 	</div>
 </div>
+-->
+<!--
 <div ng-switch="readDC">
   	<div ng-switch-when="true">	
 	    <table border="1">
@@ -109,6 +116,8 @@
 	    <br><br>
 	</div>
 </div>
+-->
+<!--
 <div ng-switch="readDA">
   	<div ng-switch-when="true">			
 	    <table border="1">
@@ -158,6 +167,8 @@
 	    <br><br> 
     </div>  
 </div>
+-->
+<!--
 <div ng-switch="readPatient">
   	<div ng-switch-when="true">			
 	    <table border="1">
@@ -199,6 +210,8 @@
 	    <br><br> 
     </div>  
 </div>
+-->
+<!--
 <div ng-switch="readPatientRecord">
   	<div ng-switch-when="true">	
 	    <table border="1">
@@ -245,7 +258,5 @@
 	    <button ng-click="read('patient_record')">View/Modify</button> 
 	    <br><br>
 	</div>
-</div> 
-<br><br>
-
-<button ng-click="goHome()">Home</button>
+</div>
+-->

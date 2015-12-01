@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="clientApp">
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-resource.min.js"></script>
+  <script src="javascripts\script.js"></script>
+  <title>Client 2</title>
+</head>
+<body>
+
+<ng-view></ng-view>
+
+<!-- Home Template-->
+<script type="text/ng-template" id="/home">
+<h1>DataBase Architecture!</h1>
+<button ng-click="getClient()">Client Database</button>
+<br><br>
+<h1>Client Operations!</h1>
+<button ng-click="bootStrapping()">Bootstrapping</button>
+<button ng-click="registration()">Registration</button>
+<button ng-click="dataTransmission()">Data Transmission</button>
+</script>
+
+<!-- Client Template-->
+<script type="text/ng-template" id="/client">
+<% include partials/client_template %>
+</script>
+
+<!--Client BootStrapping Template-->
+<script type="text/ng-template" id="/bootStrapping">
+<% include partials/client_bootstrapping_template %>
+</script>
+
+<!--Client Registration Template-->
+<script type="text/ng-template" id="/registration">
+<% include partials/client_registration_template %>
+</script>
+
+<!--Client Data Transmission Template-->
+<script type="text/ng-template" id="/dataTransmission">
+<% include partials/client_datatransmission_template %>
+</script>
+
+</body>
+</html>

@@ -688,10 +688,15 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
         
         var server_uri='http://localhost:3001/server/patient_record';
         var disableValue;
-        if(state == 'observe')
+        var displayMessage;
+        if(state == 'observe'){
           disableValue=0;
-        else if(state == 'deobserve')      
+          displayMessage = 'Observe Initiated';
+        }
+        else if(state == 'deobserve'){
           disableValue=1;
+          displayMessage = 'Observe Cancelled';
+        }
         else
           disableValue=0;
 
@@ -718,13 +723,14 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
           success(function (data){                                                
                   $scope.parameter={};
                   $scope.device={};
-                  alert('Client Record updated successfully');            
+                  alert('Client Record updated successfully');  
+                  alert(displayMessage);          
           }).
           error(function(data,status){            
             $scope.parameter={};
             $scope.device={};
             console.log('Opps error',data);            
-          });
+          });          
     }
 }])
 .controller('hospitalMgmtController', ['$scope','$location','$http','$window',function ($scope,$location,$http,$window) {
@@ -734,6 +740,7 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
     $scope.device={};
     $scope.patients={};
     $scope.patient={};
+    $scope.padata = {};
 
     var resource = 'unallocatedDevices';
     var postdata = {};
@@ -777,6 +784,41 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
         });      
     }
 
+    $scope.read = function() {      
+      $http.get('/server/patient').
+          success(function (data){                                                   
+            $scope.patient_Resdata = data;
+            $scope.readPatient='true';                              
+          }).
+          error(function(data,status){            
+            console.log('Opps error',data);
+          });          
+    }
+
+    $scope.clear = function() {      
+        $scope.readPatient='false';      
+    }
+
+    $scope.update = function() {      
+              
+      angular.forEach($scope.patient_Resdata, function(padata){
+        if(padata.Selected){               
+          $http.put('/server/patient',padata).
+          success(function (vdata){         
+                console.log("Update success");
+                $scope.read(resource);
+                alert('Updated successfully');                     
+          }).
+          error(function(data,status){            
+            console.log('Opps error',data);
+          });
+        }
+      });
+        
+    }
+
+
+
     $scope.allocateDevice = function(){
 
         postdata = {
@@ -808,6 +850,26 @@ angular.module("serverApp", ['ngRoute', 'ngResource'])
   		templateUrl: '/server',
   		controller: 'serverController'
   	})
+    .when('/devReg', {
+        templateUrl: '/devReg',
+        controller: 'serverController'
+    })
+    .when('/devConfig', {
+        templateUrl: '/devConfig',
+        controller: 'serverController'
+    })
+    .when('/devAlloc', {
+        templateUrl: '/devAlloc',
+        controller: 'serverController'
+    })
+    .when('/patients', {
+        templateUrl: '/patients',
+        controller: 'serverController'
+    })
+    .when('/patient_record', {
+        templateUrl: '/patient_record',
+        controller: 'serverController'
+    })
     .when('/writeAttributeTemplate', {
       templateUrl: '/writeAttributeTemplate',
       controller: 'operationController'

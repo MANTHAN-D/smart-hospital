@@ -1,0 +1,110 @@
+<style>
+    fieldset.scheduler-border {
+        border: 1px groove #ddd !important;
+        padding: 0 1.4em 1.4em 1.4em !important;
+        margin: 0 0 1.5em 0 !important;
+        -webkit-box-shadow:  0px 0px 0px 0px #000;
+        box-shadow:  0px 0px 0px 0px #000;
+    }
+
+    legend.scheduler-border {
+        width:inherit; /* Or auto */
+        padding:0 10px; /* To give a bit of padding on the left and right */
+        border-bottom:none;
+    }
+</style>
+<div ng-switch="readDC">
+
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">
+            <h2><span class="label label-primary">Device Configuration</span></h2>
+        </legend>
+        <br>
+
+    <div ng-switch-when="true">
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Object Id</th>
+                <th>Device Id</th>
+                <th>Parameter Name</th>
+                <th>Frequency</th>
+                <th>Disable</th>
+                <th>Safe Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="dcdata in dc_Resdata">
+                <td><input type="checkbox" value='{{dcdata.object_id}}' ng-model="dcdata.Selected"></td>
+                <td><span>{{dcdata.object_id}}</span></td>
+                <td><input type='text' value='{{dcdata.device_id}}' ng-model='dcdata.device_id'></input></td>
+                <td><input type='text'value='{{dcdata.parameter_name}}' ng-model='dcdata.parameter_name'></input></td>
+                <td><input type='text'value='{{dcdata.frequency}}' ng-model='dcdata.frequency'></input></td>
+                <td><input type='text'value='{{dcdata.disable}}' ng-model='dcdata.disable'></input></td>
+                <td><input type='text'value='{{dcdata.safe_value}}' ng-model='dcdata.safe_value'></input></td>
+            </tr>
+            </tbody>
+        </table>
+        <br><br>
+        <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-warning col-sm-offset-1" ng-click="clear('devconfig')">Back</button>
+            <button class="btn btn-primary col-sm-offset-1" ng-click="update('devconfig')">Update</button>
+            <button class="btn btn-danger col-sm-offset-1" ng-click="delete('devconfig')">Delete</button>
+        </div>
+    </div>
+    <div ng-switch-default>
+
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label class="control-label col-sm-2"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    Device ID: </label>
+
+                <div class="col-sm-5">
+                    <input ng-model='dc.device_id' class="form-control" placeholder="Enter Device ID">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2"><span class="glyphicon glyphicon-rub" aria-hidden="true"></span>
+                    Parameter Name: </label>
+
+                <div class="col-sm-5">
+                    <input ng-model='dc.parameter_name' class="form-control" placeholder="Enter Parameter Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2"><span class="glyphicon glyphicon-equalizer" aria-hidden="true"></span>
+                    Frequency: </label>
+
+                <div class="col-sm-5">
+                    <input ng-model='dc.frequency' class="form-control" placeholder="Enter Frequency">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                    Disable: </label>
+
+                <div class="col-sm-5">
+                    <input ng-model='dc.disable' class="form-control" placeholder="Enter Disable">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+                    Safe Value: </label>
+
+                <div class="col-sm-5">
+                    <input ng-model='dc.safe_value' class="form-control" placeholder="Enter Safe Value">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button class="btn btn-warning col-sm-offset-1" ng-click="goHome()">Back</button>
+                    <button class="btn btn-success col-sm-offset-1" ng-click="create('devconfig')">Create</button>
+                    <button class="btn btn-info col-sm-offset-1" ng-click="read('devconfig')">View/Modify</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</fieldset>

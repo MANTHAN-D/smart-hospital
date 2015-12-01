@@ -6,33 +6,107 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-resource.min.js"></script>
   <script src="javascripts\script.js"></script>
+
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link href="stylesheets/theme.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="javascripts/bootstrap.min.js"></script>
+
   <title>Main Server</title>
 </head>
 <body>
 
-<ng-view></ng-view>
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Smart Hospital</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Server Database <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/#/devReg">Device Registration</a></li>
+            <li><a href="/#/devConfig">Device Configuration</a></li>
+            <li><a href="/#/devAlloc">Device Allocation</a></li>
+            <li><a href="/#/patients">Patients</a></li>
+            <li><a href="/#/patient_record">Patient Record</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Device Management <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/#/writeAttributeTemplate">Write Attribute</a></li>
+            <li><a href="/#/readDatatemplate">Read Data</a></li>
+            <li><a href="/#/writeDatatemplate">Write Data</a></li>
+            <li><a href="/#/createDatatemplate">Create Data</a></li>
+            <li><a href="/#/deleteDatatemplate">Delete Data</a></li>
+            <li><a href="/#/executeDatatemplate">Execute Data</a></li>
+            <li><a href="/#/discovertemplate">Discover Data</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Information Management <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/#/notificationtemplate">Notify</a></li>
+            <li><a href="/#/observetemplate">Observe</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hospital Management <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/#/addpatienttemplate">Add Patient</a></li>
+            <li><a href="/#/allocatedevicetemplate">Allocate Device</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
+
+<div class="container">
+  <ng-view></ng-view>
+</div> <!-- /container -->
 
 <!-- Home Template-->
 <script type="text/ng-template" id="/home">
-<h1>DataBase Architecture!</h1>
-<button ng-click="getServer()">Server Database</button>
-<br><br>
-<h1>Device Management Operations!</h1>
-<button ng-click="writeAttributes()">Write Attributes</button>
-<button ng-click="readDeviceData()">Read</button>
-<button ng-click="writeDeviceData()">Write</button>
-<button ng-click="deleteDeviceData()">Delete</button>
-<button ng-click="executeOnDevice()">Execute</button>
-<button ng-click="discoverDevice()">Discover</button>
-<button ng-click="createDeviceRecord()">Create</button>
-<br><br>
-<h1>Information Management!</h1>
-<button ng-click="notify()">Notify</button>
-<button ng-click="observe()">Observe</button>
-<br><br>
-<h1>Hospital Management!</h1>
-<button ng-click="addPatient()">Add Patient</button>
-<button ng-click="allocateDevice()">Allocate Device</button>
+  <div class="btn-toolbar text-center well">
+<button class="btn btn-info btn-lg" ng-click="getServer()">Server Database</button>
+  </div>
+<br>
+<div class="btn-toolbar text-center well">
+<button class="btn btn-info btn-lg">Device Management Operations</button>
+  <br><br><br>
+<button class="btn btn-warning" ng-click="writeAttributes()">Write Attributes</button>
+<button class="btn btn-warning" ng-click="readDeviceData()">Read Data</button>
+<button class="btn btn-warning" ng-click="writeDeviceData()">Write Data</button>
+<button class="btn btn-warning" ng-click="deleteDeviceData()">Delete Data</button>
+<button class="btn btn-warning" ng-click="executeOnDevice()">Execute Data</button>
+<button class="btn btn-warning" ng-click="discoverDevice()">Discover Data</button>
+<button class="btn btn-warning" ng-click="createDeviceRecord()">Create Data</button>
+</div>
+<br>
+  <div class="btn-toolbar text-center well">
+    <button class="btn btn-info btn-lg">Information Management</button>
+    <br><br><br>
+    <button class="btn btn-warning" ng-click="notify()">Notify</button>
+    <button class="btn btn-warning" ng-click="observe()">Observe</button>
+  </div>
+<br>
+  <div class="btn-toolbar text-center well">
+    <button class="btn btn-info btn-lg">Hospital Management</button>
+    <br><br><br>    
+    <button class="btn btn-warning" ng-click="addPatient()">Add Patient</button>
+    <button class="btn btn-warning" ng-click="allocateDevice()">Allocate Device</button>
+  </div>
 </script>
 
 <!--Server Database Template-->
@@ -40,49 +114,69 @@
 <% include partials/server_template %>
 </script>
 
-<!--Server Operations Template-->
+<script type="text/ng-template" id="/devConfig">
+  <% include partials/device_configuration_template %>
+</script>
+
+<script type="text/ng-template" id="/devReg">
+  <% include partials/device_registration_template %>
+</script>
+
+<script type="text/ng-template" id="/devAlloc">
+  <% include partials/device_allocation_template %>
+</script>
+
+<script type="text/ng-template" id="/patients">
+  <% include partials/patients_template %>
+</script>
+
+<script type="text/ng-template" id="/patient_record">
+  <% include partials/patient_record_template %>
+</script>
+
+<!--Write Attribute DM Operations Template-->
 <script type="text/ng-template" id="/writeAttributeTemplate">
 <% include partials/write_attributes_template %>
 </script>
 
-<!--Notification Template-->
+<!--Read Data DM operation Template-->
+<script type="text/ng-template" id="/readDatatemplate">
+  <% include partials/read_data_template %>
+</script>
+
+<!--Write Data DM operation Template-->
+<script type="text/ng-template" id="/writeDatatemplate">
+  <% include partials/write_data_template %>
+</script>
+
+<!--Delete Data DM operation Template-->
+<script type="text/ng-template" id="/deleteDatatemplate">
+  <% include partials/delete_data_template %>
+</script>
+
+<!--Execute Data DM operation Template-->
+<script type="text/ng-template" id="/executeDatatemplate">
+  <% include partials/execute_data_template %>
+</script>
+
+<!--Discover Data DM operation Template-->
+<script type="text/ng-template" id="/discovertemplate">
+  <% include partials/discover_template %>
+</script>
+
+<!--Create Data DM operation Template-->
+<script type="text/ng-template" id="/createDatatemplate">
+  <% include partials/create_data_template %>
+</script>
+
+<!--Notification IM operation Template-->
 <script type="text/ng-template" id="/notificationtemplate">
 <% include partials/notification_template %>
 </script>
 
-<!--Observe Template-->
+<!--Observe IM operation Template-->
 <script type="text/ng-template" id="/observetemplate">
 <% include partials/observe_template %>
-</script>
-
-<!--Read Data Template-->
-<script type="text/ng-template" id="/readDatatemplate">
-<% include partials/read_data_template %>
-</script>
-
-<!--Write Data Template-->
-<script type="text/ng-template" id="/writeDatatemplate">
-<% include partials/write_data_template %>
-</script>
-
-<!--Create Data Template-->
-<script type="text/ng-template" id="/createDatatemplate">
-<% include partials/create_data_template %>
-</script>
-
-<!--Delete Data Template-->
-<script type="text/ng-template" id="/deleteDatatemplate">
-<% include partials/delete_data_template %>
-</script>
-
-<!--Execute Data Template-->
-<script type="text/ng-template" id="/executeDatatemplate">
-<% include partials/execute_data_template %>
-</script>
-
-<!--Discover Data Template-->
-<script type="text/ng-template" id="/discovertemplate">
-<% include partials/discover_template %>
 </script>
 
 <!--Add Patient Template-->
@@ -94,7 +188,6 @@
 <script type="text/ng-template" id="/allocatedevicetemplate">
 <% include partials/allocate_device_template %>
 </script>
-
 
 </body>
 </html>

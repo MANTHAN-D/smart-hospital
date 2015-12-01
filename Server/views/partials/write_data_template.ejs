@@ -1,13 +1,46 @@
-<h3>Device Management!</h3>
+<style>
+	fieldset.scheduler-border {
+		border: 1px groove #ddd !important;
+		padding: 0 1.4em 1.4em 1.4em !important;
+		margin: 0 0 1.5em 0 !important;
+		-webkit-box-shadow:  0px 0px 0px 0px #000;
+		box-shadow:  0px 0px 0px 0px #000;
+	}
 
-	Device : <select ng-options="d.device_id for d in devices" 
-	ng-model="device" ng-change="getDeviceRecord(device)"></select>
+	legend.scheduler-border {
+		width:inherit; /* Or auto */
+		padding:0 10px; /* To give a bit of padding on the left and right */
+		border-bottom:none;
+	}
+</style>
+<fieldset class="scheduler-border">
+	<legend class="scheduler-border">
+		<h2><span class="label label-primary">Write Data</span></h2>
+	</legend>
+	<br>
+
+	<form class="form-horizontal" role="form">
+		<div class="form-group">
+			<label class="control-label col-sm-2"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+				Device ID: </label>
+
+			<div class="col-sm-5">
+				<select class="form-control" ng-options="d.device_id for d in devices"
+						ng-model="device" ng-change="getDeviceRecord(device)"></select>
+			</div>
+		</div>
+		<div class="alert alert-success" role="alert">
+	{{parameter.name}} : <input class="form-control" type='text'value='{{parameter.last_value}}' ng-model='parameter.last_value'></input>
+			</div>
+
 	<br><br>
-	
-	{{parameter.name}} : <input type='text'value='{{parameter.last_value}}' ng-model='parameter.last_value'></input>
-	<br><br>	
-	<button ng-click="writeDeviceData(device)">Write</button>		
-	<br><br>
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<button class="btn btn-warning col-sm-offset-1" ng-click="goHome()">Back</button>
+				<button class="btn btn-success col-sm-offset-1" ng-click="writeDeviceData(device)">Write</button>
+			</div>
+		</div>
+		</form>
 
 <br><br>
-<button ng-click="goHome()">Home</button>
+	</fieldset>
